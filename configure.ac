@@ -146,6 +146,36 @@ if test "$enable_psf" = "yes"; then
     INPUT_PLUGINS="$INPUT_PLUGINS psf"
 fi
 
+dnl *** USF
+
+AC_ARG_ENABLE(usf,
+    [  --enable-usf            enable the USF input plugin (default=disabled)],
+    [enable_usf=$enableval],
+    [enable_usf=no]
+)
+
+if test "x$enable_usf" = "xyes"; then
+    AC_MSG_CHECKING([if your platform is supported for the USF plugin])
+    case "$target" in
+	x86_64-*-linux-gnu)
+		AC_MSG_RESULT([yes, AMD64 Linux])
+		enable_usf=yes
+		;;
+	i*86-*-linux-gnu)
+		AC_MSG_RESULT([yes, X86 Linux])
+		enable_usf=yes
+		;;
+	*)
+		AC_MSG_RESULT([no])
+		enable_usf=no
+		;;
+    esac
+
+    if test "x$enable_usf" = "xyes"; then
+        INPUT_PLUGINS="$INPUT_PLUGINS usf"
+    fi
+fi
+
 dnl *** MP3
 
 AC_ARG_ENABLE(mp3,
