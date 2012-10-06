@@ -1691,7 +1691,7 @@ int r4300i_CPU_MemoryFilter64_2( uintptr_t MemAddress, ucontext_t * context) {
 		uint8_t dest_reg = (*(ip+3) % 0x40) / 8;
 		int32_t half = 0;
 		if(*ip & 4) dest_reg += 8;
-		r4300i_LH_NonMemory(MemAddress, &half, 1);
+		r4300i_LH_NonMemory(MemAddress, (uint32_t*)&half, 1);
 
 		context->uc_mcontext.gregs[CONV_REG64(dest_reg)] = (int32_t)half;
 

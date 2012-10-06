@@ -43,8 +43,8 @@ extern int32_t RSP_Cpu;
 uint32_t get_length_from_string(uint8_t * str_length) {
 	uint32_t ttime = 0, temp = 0, mult = 1, level = 1;
 	char Source[1024];
-	uint8_t * src = Source + strlen(str_length);
-	strcpy(&Source[1], str_length);
+	uint8_t * src = (uint8_t*)(Source + strlen((char*)str_length));
+	strcpy(&Source[1], (char*)str_length);
 	Source[0] = 0;
 
     while(*src) {
@@ -120,9 +120,9 @@ int LoadUSF(const gchar * fn, VFSFile *fil)
 
     	vfs_fread(tagbuffer, tagsize, 1, fil);
 
-		psftag_raw_getvar(tagbuffer,"_lib",buffer2,50000);
+	psftag_raw_getvar((char*)tagbuffer,"_lib",(char*)buffer2,50000);
 
-		if(strlen(buffer2)) {
+		if(strlen((char*)buffer2)) {
 			char path[512];
 			int pathlength = 0;
 
@@ -135,38 +135,38 @@ int LoadUSF(const gchar * fn, VFSFile *fil)
 
 			strncpy(path, fn, pathlength);
 			path[pathlength] = 0;
-			strcat(path, buffer2);
+			strcat(path, (char*)buffer2);
 
 			VFSFile *file2 = vfs_fopen(path, "rb");
 			LoadUSF(path, file2);
 			vfs_fclose(file2);
 		}
 
-		psftag_raw_getvar(tagbuffer,"_enablecompare",buffer2,50000);
-		if(strlen(buffer2))
+		psftag_raw_getvar((char*)tagbuffer,"_enablecompare",(char*)buffer2,50000);
+		if(strlen((char*)buffer2))
 			enablecompare = 1;
 		else
 			enablecompare = 0;
 
-		psftag_raw_getvar(tagbuffer,"_enableFIFOfull",buffer2,50000);
-		if(strlen(buffer2))
+		psftag_raw_getvar((char*)tagbuffer,"_enableFIFOfull",(char*)buffer2,50000);
+		if(strlen((char*)buffer2))
 			enableFIFOfull = 1;
 		else
 			enableFIFOfull = 0;
 
-		psftag_raw_getvar(tagbuffer, "length", buffer2, 50000);
-        if(strlen(buffer2)) {
-			track_time = get_length_from_string(buffer2);
+		psftag_raw_getvar((char*)tagbuffer, "length", (char*)buffer2, 50000);
+		if(strlen((char*)buffer2)) {
+		    track_time = get_length_from_string(buffer2);
 		}
 
-		psftag_raw_getvar(tagbuffer, "fade", buffer2, 50000);
-        if(strlen(buffer2)) {
+		psftag_raw_getvar((char*)tagbuffer, "fade", (char*)buffer2, 50000);
+		if(strlen((char*)buffer2)) {
 			fade_time = get_length_from_string(buffer2);
 		}
 
-		psftag_raw_getvar(tagbuffer, "title", buffer2, 50000);
-        if(strlen(buffer2))
-			strcpy(title, buffer2);
+		psftag_raw_getvar((char*)tagbuffer, "title", (char*)buffer2, 50000);
+		if(strlen((char*)buffer2))
+	    strcpy((char*)title, (char*)buffer2);
 		else
 		{
 			int pathlength = 0;
@@ -178,7 +178,7 @@ int LoadUSF(const gchar * fn, VFSFile *fil)
 			else //no path
 				pathlength = 7;
 
-			strcpy(title, &fn[pathlength]);
+			strcpy((char*)title, &fn[pathlength]);
 
 		}
 
@@ -417,19 +417,19 @@ Tuple * usf_get_song_tuple(const gchar * fn, VFSFile *fil)
 
     	vfs_fread(tagbuffer, tagsize, 1, fil);
 
-		psftag_raw_getvar(tagbuffer, "fade", buffer2, 50000);
-        if(strlen(buffer2))
+	psftag_raw_getvar((char*)tagbuffer, "fade", (char*)buffer2, 50000);
+		if(strlen((char*)buffer2))
 			temp_fade = get_length_from_string(buffer2);
 
-		psftag_raw_getvar(tagbuffer, "length", buffer2, 50000);
-        if(strlen(buffer2))
+		psftag_raw_getvar((char*)tagbuffer, "length", (char*)buffer2, 50000);
+	if(strlen((char*)buffer2))
         	tuple_set_int(tuple, FIELD_LENGTH, NULL, get_length_from_string(buffer2) + temp_fade);
 		else
 			tuple_set_int(tuple, FIELD_LENGTH, NULL, (180*1000));
 
-		psftag_raw_getvar(tagbuffer, "title", buffer2, 50000);
-        if(strlen(buffer2))
-			tuple_set_str(tuple, FIELD_TITLE, NULL, buffer2);
+		psftag_raw_getvar((char*)tagbuffer, "title", (char*)buffer2, 50000);
+	if(strlen((char*)buffer2))
+	    tuple_set_str(tuple, FIELD_TITLE, NULL, (char*)buffer2);
 		else
 		{
 			char title[512];
@@ -448,19 +448,19 @@ Tuple * usf_get_song_tuple(const gchar * fn, VFSFile *fil)
 
 		}
 
-		psftag_raw_getvar(tagbuffer, "artist", buffer2, 50000);
-        if(strlen(buffer2))
-			tuple_set_str(tuple, FIELD_ARTIST, NULL, buffer2);
+		psftag_raw_getvar((char*)tagbuffer, "artist", (char*)buffer2, 50000);
+        if(strlen((char*)buffer2))
+	    tuple_set_str(tuple, FIELD_ARTIST, NULL, (char*)buffer2);
 
-		psftag_raw_getvar(tagbuffer, "game", buffer2, 50000);
-        if(strlen(buffer2)) {
-			tuple_set_str(tuple, FIELD_ALBUM, NULL, buffer2);
-			tuple_set_str(tuple, -1, "game", buffer2);
+	psftag_raw_getvar((char*)tagbuffer, "game", (char*)buffer2, 50000);
+        if(strlen((char*)buffer2)) {
+			tuple_set_str(tuple, FIELD_ALBUM, NULL, (char*)buffer2);
+			tuple_set_str(tuple, -1, "game", (char *)buffer2);
 		}
 
-		psftag_raw_getvar(tagbuffer, "copyright", buffer2, 50000);
-        if(strlen(buffer2))
-			tuple_set_str(tuple, FIELD_COPYRIGHT, NULL, buffer2);
+		psftag_raw_getvar((char *)tagbuffer, "copyright", (char *)buffer2, 50000);
+        if(strlen((char*)buffer2))
+			tuple_set_str(tuple, FIELD_COPYRIGHT, NULL, (char *)buffer2);
 
 		// This for unknown reasons turns the "Kbps" in the UI to "channels"
 		//tuple_set_str(tuple, FIELD_QUALITY, NULL, "sequenced");
