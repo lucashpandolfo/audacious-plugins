@@ -24,11 +24,12 @@
  *
  */
 
+#include <stdint.h>
 
-#define PUTDST8(dest,value)  {(*((uint8_t *)(dest))=(uint8_t)(value)); dest += 1;}
-#define PUTDST16(dest,value) {(*((uint16_t *)(dest))=(uint16_t)(value)); dest += 2;}
-#define PUTDST32(dest,value) {(*((uint32_t *)(dest))=(uint32_t)(value)); dest += 4;}
-#define PUTDST64(dest,value) {(*((uint64_t *)(dest))=(uint64_t)(value)); dest += 8;}
+#define PUTDST8(dest,value)  {(*((uint8_t *)(dest))=(uint8_t)(intptr_t)(value)); dest += 1;}
+#define PUTDST16(dest,value) {(*((uint16_t *)(dest))=(uint16_t)(intptr_t)(value)); dest += 2;}
+#define PUTDST32(dest,value) {(*((uint32_t *)(dest))=(uint32_t)(intptr_t)(value)); dest += 4;}
+#define PUTDST64(dest,value) {(*((uint64_t *)(dest))=(uint64_t)(intptr_t)(value)); dest += 8;}
 
 #include "types.h"
 
@@ -38,7 +39,7 @@
 #define X64_Reg		0x10
 #define X64_Ext		0x20
 
-extern uint8_t Index[9];
+extern uint8_t Indexes[9];
 
 enum x86RegValues {
 
@@ -95,13 +96,13 @@ enum x86FpuValues {
 	}
 
 #define OPCODE_REG_MREG_IMM32(oplen,opcode,reg,rm,imm32) \
-	PUTDST8(RecompPos, 0x40 | (((rm)&0x20)>>5) | (((reg)&0x10)>>1) | (((reg)&0x20)>>3)); \
+	PUTDST8(RecompPos, (0x40 | (((rm)&0x20)>>5) | (((reg)&0x10)>>1) | (((reg)&0x20)>>3))); \
 	PUTDST##oplen  (RecompPos, opcode); \
 	if(((rm)&0xf)==0x5) { \
-		PUTDST8(RecompPos, 0x80 | (((rm)-1)&0x7) | ((((reg)-1)&0x7) << 3)); \
+		PUTDST8(RecompPos, (0x80 | (((rm)-1)&0x7) | ((((reg)-1)&0x7) << 3))); \
 		PUTDST8(RecompPos, 0x24); \
 	} else { \
-		PUTDST8(RecompPos, 0x80 | (((rm)-1)&0x7) | ((((reg)-1)&0x7) << 3)); \
+		PUTDST8(RecompPos, (0x80 | (((rm)-1)&0x7) | ((((reg)-1)&0x7) << 3))); \
 	} \
 	PUTDST32(RecompPos,imm32);
 
@@ -173,7 +174,7 @@ enum x86FpuValues {
 #define X64_Ext		0
 
 
-extern uint8_t Index[9];
+extern uint8_t Indexes[9];
 
 enum x86RegValues {
 

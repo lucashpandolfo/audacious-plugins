@@ -44,7 +44,7 @@ void ChangeDefaultRoundingModel (void) {
 void CompileCop1Test (BLOCK_SECTION * Section) {
 	if (FpuBeenUsed) { return; }
 	TestVariable(STATUS_CU1,&STATUS_REGISTER);
-	CompileExit(Section->CompilePC,&Section->RegWorking,COP1_Unuseable,0,JeLabel32);
+	CompileExit(Section->CompilePC,&Section->RegWorking,COP1_Unuseable,0,(void*)(uintptr_t)JeLabel32);
 	FpuBeenUsed = 1;
 }
 

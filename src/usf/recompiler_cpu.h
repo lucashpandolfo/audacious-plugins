@@ -234,7 +234,7 @@ extern uint32_t * TLBLoadAddress, TargetIndex;
 extern TARGET_INFO * TargetInfo;
 extern uint16_t FPU_RoundingMode;
 
-#define SetJump32(Loc,JumpLoc) *(uint32_t *)(Loc)= (uint32_t)(((uint32_t)(JumpLoc)) - (((uint32_t)(Loc)) + 4));
-#define SetJump8(Loc,JumpLoc)  *(uint8_t  *)(Loc)= (uint8_t )(((uint8_t )(JumpLoc)) - (((uint8_t )(Loc)) + 1));
+#define SetJump32(Loc,JumpLoc) *(uint32_t *)(Loc)= (uint32_t)(((uint32_t)(intptr_t)(JumpLoc)) - (((uint32_t)(intptr_t)(Loc)) + 4));
+#define SetJump8(Loc,JumpLoc)  *(uint8_t  *)(Loc)= (uint8_t )(((uint8_t )(intptr_t)(JumpLoc)) - (((uint8_t )(intptr_t)(Loc)) + 1));
 
 #endif

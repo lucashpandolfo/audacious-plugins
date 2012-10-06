@@ -43,7 +43,7 @@
 #define X64_Reg		0x10
 #define X64_Ext		0x20
 
-extern uint8_t Index[9];
+extern uint8_t Indexes[9];
 
 
 char * x86_Strings[8] = {
@@ -157,13 +157,13 @@ void RSPAndConstToX86Reg(int32_t x86reg, uint32_t Const) {
 void RSPAndVariableDispToX86Reg(void *Variable, int32_t x86reg, int32_t AddrReg, int32_t Multiplier) {
 #ifdef USEX64
 	if(((uintptr_t)Variable - (uintptr_t)TLB_Map) < 0x7FFFFFFF) {
-		OPCODE_REG_BASE_INDEX_SCALE_IMM32(8,0x23,x86reg,x86_R15,AddrReg,Index[Multiplier], (uintptr_t)Variable - (uintptr_t)TLB_Map);
+		OPCODE_REG_BASE_INDEX_SCALE_IMM32(8,0x23,x86reg,x86_R15,AddrReg,Indexes[Multiplier], (uintptr_t)Variable - (uintptr_t)TLB_Map);
 	} else {
 		LOAD_VARIABLE(x86_TEMP, Variable);
-		OPCODE_REG_BASE_INDEX_SCALE(8,0x23,x86reg,x86_TEMP,AddrReg,Index[Multiplier]);
+		OPCODE_REG_BASE_INDEX_SCALE(8,0x23,x86reg,x86_TEMP,AddrReg,Indexes[Multiplier]);
 	}
 #else
-	OPCODE_REG_INDEX_SCALE_IMM32(8,0x23,x86reg,AddrReg,Index[Multiplier],Variable);
+	OPCODE_REG_INDEX_SCALE_IMM32(8,0x23,x86reg,AddrReg,Indexes[Multiplier],Variable);
 #endif
 }
 
@@ -223,7 +223,7 @@ void RSPCompX86RegToX86Reg(int32_t Destination, int32_t Source) {
 	OPCODE_REG_REG(8,0x3B,Destination,Source);
 }
 
-void RSPDecX86reg(x86reg) {
+void RSPDecX86reg(int32_t x86reg) {
 	OPCODE_REG_REG(8,0xFF,OP_D1,x86reg);
 }
 
@@ -374,7 +374,7 @@ void RSPJsLabel32(uint32_t Value) {
 }
 
 void RSPLeaRegReg(int32_t x86RegDest, int32_t x86RegSrc, int32_t multiplier) {
-	OPCODE_REG_BASE_INDEX_SCALE(8,0x8D,x86RegDest,x86_EBP,x86RegSrc,Index[multiplier]);
+	OPCODE_REG_BASE_INDEX_SCALE(8,0x8D,x86RegDest,x86_EBP,x86RegSrc,Indexes[multiplier]);
 	PUTDST32(RSPRecompPos,0x00000000);
 }
 
@@ -503,16 +503,16 @@ void RSPMoveVariableToX86reg(void *Variable, int32_t x86reg) {
 }
 
 void RSPMoveX86RegDispToX86Reg(int32_t x86reg, int32_t AddrReg, int32_t IndexReg, int32_t Multiplier) {
-	OPCODE_REG_BASE_INDEX_SCALE(8,0x8B,x86reg,AddrReg,IndexReg,Index[Multiplier]);
+	OPCODE_REG_BASE_INDEX_SCALE(8,0x8B,x86reg,AddrReg,IndexReg,Indexes[Multiplier]);
 }
 
 void RSPMoveN64MemDispToX86reg(int32_t x86reg, int32_t AddrReg, uint8_t Disp) {
 #ifdef USEX64
 	if(((uintptr_t)DMEM - (uintptr_t)TLB_Map) < 0x7FFFFFFF) {
-		OPCODE_REG_BASE_INDEX_SCALE_IMM32(8,0x8B,x86reg,x86_R15,AddrReg,Index[0],(((uintptr_t)DMEM - (uintptr_t)TLB_Map))+Disp);
+		OPCODE_REG_BASE_INDEX_SCALE_IMM32(8,0x8B,x86reg,x86_R15,AddrReg,Indexes[0],(((uintptr_t)DMEM - (uintptr_t)TLB_Map))+Disp);
 	} else {
 		LOAD_VARIABLE(x86_TEMP, DMEM);
-		OPCODE_REG_BASE_INDEX_SCALE_IMM8(8,0x8B,x86reg,x86_TEMP,AddrReg,Index[0],Disp);
+		OPCODE_REG_BASE_INDEX_SCALE_IMM8(8,0x8B,x86reg,x86_TEMP,AddrReg,Indexes[0],Disp);
 	}
 #else
     OPCODE_REG_MREG_IMM32(8,0x8B,x86reg,AddrReg,DMEM+Disp);
@@ -522,13 +522,13 @@ void RSPMoveN64MemDispToX86reg(int32_t x86reg, int32_t AddrReg, uint8_t Disp) {
 void RSPMoveVariableDispToX86Reg(void *Variable, int32_t x86reg, int32_t AddrReg, int32_t Multiplier) {
 #ifdef USEX64
 	if(((uintptr_t)Variable - (uintptr_t)TLB_Map) < 0x7FFFFFFF) {
-		OPCODE_REG_BASE_INDEX_SCALE_IMM32(8,0x8B,x86reg,x86_R15,AddrReg,Index[Multiplier],((uintptr_t)Variable - (uintptr_t)TLB_Map));
+		OPCODE_REG_BASE_INDEX_SCALE_IMM32(8,0x8B,x86reg,x86_R15,AddrReg,Indexes[Multiplier],((uintptr_t)Variable - (uintptr_t)TLB_Map));
 	} else {
 		LOAD_VARIABLE(x86_TEMP, Variable);
-		OPCODE_REG_BASE_INDEX_SCALE(8,0x8B,x86reg,x86_TEMP,AddrReg,Index[Multiplier]);
+		OPCODE_REG_BASE_INDEX_SCALE(8,0x8B,x86reg,x86_TEMP,AddrReg,Indexes[Multiplier]);
 	}
 #else
-	OPCODE_REG_INDEX_SCALE_IMM32(8,0x8B,x86reg,AddrReg,Index[Multiplier],Variable);
+	OPCODE_REG_INDEX_SCALE_IMM32(8,0x8B,x86reg,AddrReg,Indexes[Multiplier],Variable);
 #endif
 }
 

@@ -109,7 +109,7 @@ static void ADPCM2 () { // Verified to be 100% Accurate...
 			{
 				out[i]=*(short *)&rsp.RDRAM[(loopval+i*2)^2];
 			}*/
-			memcpyfn64((u8 *)out,(u8 *)loopval,32);
+			memcpyfn64((u8 *)out,(u8 *)(uintptr_t)loopval,32);
 		}
 		else
 		{/*
@@ -118,7 +118,7 @@ static void ADPCM2 () { // Verified to be 100% Accurate...
 				out[i]=*(short *)&rsp.RDRAM[(Address+i*2)^2];
 			}*/
 
-			memcpyfn64((u8 *)out,(u8 *)Address,32);
+			memcpyfn64((u8 *)out,(u8 *)(uintptr_t)Address,32);
 		}
 	}
 
@@ -339,7 +339,7 @@ static void ADPCM2 () { // Verified to be 100% Accurate...
 		count-=32;
 	}
 	out-=16;
-	memcpy2n64((u8 *)Address,(u8 *)out,32);
+	memcpy2n64((u8 *)(uintptr_t)Address,(u8 *)out,32);
 }
 
 static void CLEARBUFF2 () {
@@ -354,14 +354,14 @@ static void LOADBUFF2 () { // Needs accuracy verification...
 	u32 cnt = (((inst1 >> 0xC)+3)&0xFFC);
 	v0 = (inst2 & 0xfffffc);// + SEGMENTS[(inst2>>24)&0xf];
 
-	memcpyfn64 ((u8 *)BufferSpace+(inst1&0xfffc), (u8 *)v0, (cnt+3)&0xFFFC);
+	memcpyfn64 ((u8 *)(uintptr_t)BufferSpace+(inst1&0xfffc), (u8 *)(uintptr_t)v0, (cnt+3)&0xFFFC);
 }
 
 static void SAVEBUFF2 () { // Needs accuracy verification...
 	u32 v0;
 	u32 cnt = (((inst1 >> 0xC)+3)&0xFFC);
 	v0 = (inst2 & 0xfffffc);// + SEGMENTS[(inst2>>24)&0xf];
-	memcpy2n64 ((u8 *)v0, (u8 *)BufferSpace+(inst1&0xfffc), (cnt+3)&0xFFFC);
+	memcpy2n64 ((u8 *)(uintptr_t)v0, (u8 *)BufferSpace+(inst1&0xfffc), (cnt+3)&0xFFFC);
 }
 
 

@@ -146,15 +146,15 @@ if test "$enable_psf" = "yes"; then
     INPUT_PLUGINS="$INPUT_PLUGINS psf"
 fi
 
-dnl *** USF
+dnl USF
+dnl ===
 
 AC_ARG_ENABLE(usf,
-    [  --enable-usf            enable the USF input plugin (default=disabled)],
-    [enable_usf=$enableval],
-    [enable_usf=no]
-)
+ [  --disable-usf           disable the USF input plugin],
+ [enable_usf=$enableval],
+ [enable_usf=yes])
 
-if test "x$enable_usf" = "xyes"; then
+if test "$enable_usf" = "yes"; then
     AC_MSG_CHECKING([if your platform is supported for the USF plugin])
     case "$target" in
 	x86_64-*-linux-gnu)
@@ -171,7 +171,7 @@ if test "x$enable_usf" = "xyes"; then
 		;;
     esac
 
-    if test "x$enable_usf" = "xyes"; then
+    if test "$enable_usf" = "yes"; then
         INPUT_PLUGINS="$INPUT_PLUGINS usf"
     fi
 fi

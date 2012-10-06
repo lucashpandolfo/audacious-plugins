@@ -1838,7 +1838,7 @@ uint32_t GenerateX86Code (BLOCK_SECTION * Section, uint32_t Test) {
 	NextInstruction = NORMAL;
 
 #ifdef USEX64
-	MoveConstQwordToX86reg(TLB_Map, x86_R15);
+	MoveConstQwordToX86reg((uint64_t)TLB_Map, x86_R15);
 #endif
 
 	do {
@@ -2596,7 +2596,7 @@ void StartRecompilerCPU (void ) {
 					Block = *(DelaySlotTable + (Addr >> 12));
 
 				if (Block == NULL) {
-					Block = CompileDelaySlot();
+					Block = (void*)CompileDelaySlot();
 
 					*(DelaySlotTable + (Addr >> 12)) = Block;
 
@@ -2626,7 +2626,7 @@ void StartRecompilerCPU (void ) {
 
 
 			if (Block == NULL) {
-				Block = Compiler4300iBlock();
+				Block = (void*)Compiler4300iBlock();
 
 				*(JumpTable + (Addr >> 2)) = Block;
 

@@ -744,7 +744,7 @@ void CompilerLinkBlocks(void) {
 
 
 void CompilerRSPBlock ( void ) {
-	uint32_t Count, Padding, X86BaseAddress = (uint32_t)RSPRecompPos;
+        uint32_t Count, Padding, X86BaseAddress = (uint32_t)(intptr_t)RSPRecompPos;
 
 	RSPNextInstruction = NORMAL;
 	RSPCompilePC = *PrgCount;
@@ -772,7 +772,7 @@ void CompilerRSPBlock ( void ) {
 
 
 #ifdef USEX64
-	RSPMoveConstQwordToX86reg(TLB_Map, x86_R15);
+	RSPMoveConstQwordToX86reg((uintptr_t)TLB_Map, x86_R15);
 #endif
 
 	do {
@@ -906,7 +906,7 @@ void RunRecompilerCPU ( uint32_t Cycles ) {
 		{
 
 			void (*block)();
-			block=Block;
+			block= (void*)(Block);
 #ifdef USEX64			
 			__asm__ __volatile__("pushq %rax");
 			__asm__ __volatile__("pushq %rbx");

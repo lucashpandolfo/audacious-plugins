@@ -12,6 +12,8 @@
 
 #include <audacious/plugin.h>
 
+#include <glib.h>
+
 #include <unistd.h>
 #include <pthread.h>
 #include <stdlib.h>

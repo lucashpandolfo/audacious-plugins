@@ -98,7 +98,7 @@ int32_t Allocate_Memory ( void ) {
 
 	memset(TLB_Map, 0, 0x100000 * sizeof(uintptr_t) + 0x10000);
 
-	N64MEM = mmap((uintptr_t)MemChunk + 0x100000 * sizeof(uintptr_t) + 0x10000, 0xD000 + RdramSize, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, 0, 0);
+	N64MEM = mmap((void*)(uintptr_t)MemChunk + 0x100000 * sizeof(uintptr_t) + 0x10000, 0xD000 + RdramSize, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, 0, 0);
 	if(N64MEM == NULL) {
 		DisplayError("Failed to allocate N64MEM");
 		return 0;
@@ -106,7 +106,7 @@ int32_t Allocate_Memory ( void ) {
 
 	memset(N64MEM, 0, RdramSize);
 
-	NOMEM = mmap((uintptr_t)N64MEM + RdramSize, 0xD000, PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, 0, 0);
+	NOMEM = mmap((void*)(uintptr_t)N64MEM + RdramSize, 0xD000, PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, 0, 0);
 
 	if(RdramSize == 0x400000)
 	{
@@ -1454,7 +1454,7 @@ int32_t r4300i_SW_NonMemory ( uint32_t PAddr, uint32_t Value ) {
 		case 0x04500000: AI_DRAM_ADDR_REG = Value; break;
 		case 0x04500004:
 			AI_LEN_REG = Value;
-			if (AiLenChanged != NULL) { AiLenChanged(); }
+			AiLenChanged();
 			break;
 		case 0x04500008: AI_CONTROL_REG = (Value & 0x1); break;
 		case 0x0450000C:
@@ -1681,7 +1681,7 @@ static int32_t CONV_REG64(int32_t dest_reg) {
 
 #ifdef __LP64__
 int r4300i_CPU_MemoryFilter64_2( uintptr_t MemAddress, ucontext_t * context) {
-	uint8_t * ip = context->uc_mcontext.gregs[REG_RIP];
+	uint8_t * ip = (uint8_t*)context->uc_mcontext.gregs[REG_RIP];
 
 	if(MemAddress == 0) {
 		return 1;

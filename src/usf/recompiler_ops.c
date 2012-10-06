@@ -37,7 +37,7 @@ void CompileReadTLBMiss (BLOCK_SECTION * Section, int32_t AddressReg, int32_t Lo
 	MoveX86regToVariable(AddressReg,TLBLoadAddress);
 #endif
     TestX86RegToX86Reg(LookUpReg,LookUpReg);
-	CompileExit(Section->CompilePC,&Section->RegWorking,TLBReadMiss,0,JeLabel32);
+    CompileExit(Section->CompilePC,&Section->RegWorking,TLBReadMiss,0,(void*)(uintptr_t) JeLabel32);
 }
 
 /************************** Branch functions  ************************/
@@ -2149,7 +2149,7 @@ void Compile_R4300i_SDR (BLOCK_SECTION * Section) {
 }
 
 void  ClearRecomplierCache (uint32_t Address) {
-	if (!TranslateVaddr(&Address)) { DisplayError("Cache: Failed to translate: %X",Address); return; }
+    if (!TranslateVaddr((uintptr_t*)&Address)) { DisplayError("Cache: Failed to translate: %X",Address); return; }
 	if (Address < RdramSize) {
 		uint32_t Block = Address >> 12;
 		if (N64_Blocks.NoOfRDRamBlocks[Block] > 0) {
@@ -2220,7 +2220,7 @@ void Compile_R4300i_LL (BLOCK_SECTION * Section) {
 		Map_GPR_32bit(Section,Opcode.rt,1,-1);
 		Compile_LW(MipsRegLo(Opcode.rt),Address);
 		MoveConstToVariable(1,&LLBit);
-		TranslateVaddr(&Address);
+		TranslateVaddr((uintptr_t*)&Address);
 		MoveConstToVariable(Address,&LLAddr);
 		return;
 	}
@@ -4524,7 +4524,7 @@ void Compile_R4300i_COP0_MT (BLOCK_SECTION * Section) {
 		Pushad();
 		Call_Direct(SetFpuLocations);
 		Popad();
-		*(uint8_t *)(Jump)= (uint8_t )(((uint8_t )(RecompPos)) - (((uint8_t )(Jump)) + 1));
+		*(uint8_t *)(Jump)= (uint8_t )(((uint8_t )(uintptr_t)(RecompPos)) - (((uint8_t )(uintptr_t)(Jump)) + 1));
 
 		//TestConstToX86Reg(STATUS_FR,OldStatusReg);
 		//CompileExit(Section->CompilePC+4,Section->RegWorking,ExitResetRecompCode,0,JneLabel32);

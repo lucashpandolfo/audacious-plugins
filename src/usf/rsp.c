@@ -212,7 +212,7 @@ void RSP_SP_DMA_READ (void) {
 	} else {
 		for (j = 0 ; j < Count; j++) {
 			for (i = 0 ; i < Length; i++) {
-				*(uint8_t *)(((uint32_t)Dest + i) ^ 3) = *(uint8_t *)(((uint32_t)Source + i) ^ 3);
+			    *(uint8_t *)(uintptr_t)(((uint32_t)(uintptr_t)Dest + i) ^ 3) = *(uint8_t *)(uintptr_t)(((uint32_t)(uintptr_t)Source + i) ^ 3);
 			}
 			Source += Skip;
 			Dest += Length;
@@ -267,7 +267,7 @@ void RSP_SP_DMA_WRITE (void) {
 	} else {
 		for (j = 0 ; j < Count; j++) {
 			for (i = 0 ; i < Length; i++) {
-				*(uint8_t *)(((uint32_t)Dest + i) ^ 3) = *(uint8_t *)(((uint32_t)Source + i) ^ 3);
+			    *(uint8_t *)(uintptr_t)(((uint32_t)(uintptr_t)Dest + i) ^ 3) = *(uint8_t *)(intptr_t)(((uint32_t)(uintptr_t)Source + i) ^ 3);
 			}
 			Source += Length;
 			Dest += Skip;
