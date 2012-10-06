@@ -725,12 +725,11 @@ void RSP_Vector_VMACU (void) {
 }
 
 void RSP_Vector_VMACQ (void) {
-	int32_t count, el, del;
+	int32_t count, el;
 	REGISTER32 temp;
 
 	for (count = 0; count < 8; count ++ ) {
 		el = Indx[RSPOpC.rs].B[count];
-		del = EleSpec[RSPOpC.rs].B[el];
 
 		if (RSP_ACCUM[el].W[1] > 0x20) {
 			if ((RSP_ACCUM[el].W[1] & 0x20) == 0) {

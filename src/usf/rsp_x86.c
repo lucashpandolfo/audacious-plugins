@@ -180,20 +180,14 @@ void RSPBreakPoint (void) {
 }
 
 void RSPCall_Direct(void * FunctAddress) {
-	uintptr_t disp = 0;
 #ifdef USEX64
-	disp = (uintptr_t)FunctAddress-(uintptr_t)RSPRecompPos - 5;
 	RSPSubConstFromX86Reg(x86_RSP, 0x28);
-//	if(disp <= 0x7fffffff) {
-//		PUTDST8(RSPRecompPos,0xE8);
-//		PUTDST32(RSPRecompPos,disp);
-//	} else {
-		LOAD_VARIABLE(x86_TEMP, FunctAddress);
-		OPCODE_REG_REG(8,0xff,OP_D2,x86_TEMP);
+	LOAD_VARIABLE(x86_TEMP, FunctAddress);
+	OPCODE_REG_REG(8,0xff,OP_D2,x86_TEMP);
 
-//	}
 	RSPAddConstToX86Reg(x86_RSP, 0x28);
 #else
+	uintptr_t disp = 0;
 	disp = (uintptr_t)FunctAddress-(uintptr_t)RSPRecompPos - 5;
 	PUTDST8(RSPRecompPos,0xE8);
 	PUTDST32(RSPRecompPos,disp);

@@ -2642,9 +2642,8 @@ void StartRecompilerCPU (void ) {
 
 
 void SyncRegState (BLOCK_SECTION * Section, REG_INFO * SyncTo) {
-	int count, x86Reg,x86RegHi, changed;
+	int count, x86Reg,x86RegHi;
 
-	changed = 0;
 	UnMap_AllFPRs(Section);
 	if (CurrentRoundingModel != SyncTo->RoundingModel) { CurrentRoundingModel = RoundUnknown; }
 
@@ -2673,7 +2672,6 @@ void SyncRegState (BLOCK_SECTION * Section, REG_INFO * SyncTo) {
 				continue;
 			}
 		}
-		changed = 1;
 
 		switch (SyncTo->MIPS_RegState[count]) {
 		case STATE_UNKNOWN: UnMap_GPR(Section,count,1);  break;
@@ -2774,7 +2772,7 @@ void SyncRegState (BLOCK_SECTION * Section, REG_INFO * SyncTo) {
 			x86MapOrder(x86Reg) = 1;
 			break;
 		default:
-			changed = 0;
+			break;
 		}
 	}
 }

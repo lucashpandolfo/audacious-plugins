@@ -80,7 +80,6 @@ static void ADPCM2 () { // Verified to be 100% Accurate...
 	short *book1,*book2;
 
 	u8 srange;
-	u8 inpinc;
 	u8 mask1;
 	u8 mask2;
 	u8 shifter;
@@ -89,13 +88,11 @@ static void ADPCM2 () { // Verified to be 100% Accurate...
 
 	if (Flags & 0x4) { // Tricky lil Zelda MM and ABI2!!! hahaha I know your secrets! :DDD
 		srange = 0xE;
-		inpinc = 0x5;
 		mask1 = 0xC0;
 		mask2 = 0x30;
 		shifter = 10;
 	} else {
 		srange = 0xC;
-		inpinc = 0x9;
 		mask1 = 0xf0;
 		mask2 = 0x0f;
 		shifter = 12;
