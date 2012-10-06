@@ -2826,7 +2826,7 @@ void Compile_R4300i_SPECIAL_DSLLV (BLOCK_SECTION * Section) {
 	if (Opcode.rd == 0) { return; }
 
 	if (IsConst(Opcode.rs)) {
-		uint32_t Shift = (MipsRegLo(Opcode.rs) & 0x3F);
+		MipsRegLo(Opcode.rs);
 		Compile_R4300i_UnknownOpcode(Section);
 		return;
 	}
@@ -2916,7 +2916,7 @@ void Compile_R4300i_SPECIAL_DSRAV (BLOCK_SECTION * Section) {
 	if (Opcode.rd == 0) { return; }
 
 	if (IsConst(Opcode.rs)) {
-		uint32_t Shift = (MipsRegLo(Opcode.rs) & 0x3F);
+		MipsRegLo(Opcode.rs);
 		Compile_R4300i_UnknownOpcode(Section);
 		return;
 	}

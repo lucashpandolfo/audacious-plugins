@@ -2451,7 +2451,7 @@ void RSPCompile_Vector_VMACF ( void ) {
 
 	int32_t bOptimize = ((RSPOpC.rs & 0x0f) >= 8) ? 1 : 0;
 	int32_t bWriteToDest = WriteToVectorDest(RSPOpC.sa, RSPCompilePC);
-	int32_t bWriteToAccum = WriteToAccum(EntireAccum, RSPCompilePC);
+	WriteToAccum(EntireAccum, RSPCompilePC);
 
 	#ifndef RSPCompileVmacf
 	RSPCheat_r4300iOpcode(RSP_Vector_VMACF); return;
@@ -2592,7 +2592,7 @@ void RSPCompile_Vector_VMADM ( void ) {
 
 	int32_t bOptimize = ((RSPOpC.rs & 0x0f) >= 8) ? 1 : 0;
 	int32_t bWriteToDest = WriteToVectorDest(RSPOpC.sa, RSPCompilePC);
-	int32_t bWriteToAccum = WriteToAccum(EntireAccum, RSPCompilePC);
+	WriteToAccum(EntireAccum, RSPCompilePC);
 
 	#ifndef RSPCompileVmadm
 	RSPCheat_r4300iOpcode(RSP_Vector_VMADM); return;
@@ -2676,7 +2676,7 @@ void RSPCompile_Vector_VMADN ( void ) {
 
 	int32_t bOptimize = ((RSPOpC.rs & 0x0f) >= 8) ? 1 : 0;
 	int32_t bWriteToDest = WriteToVectorDest(RSPOpC.sa, RSPCompilePC);
-	int32_t bWriteToAccum = WriteToAccum(EntireAccum, RSPCompilePC);
+	WriteToAccum(EntireAccum, RSPCompilePC);
 
 	#ifndef RSPCompileVmadn
 	RSPCheat_r4300iOpcode(RSP_Vector_VMADN); return;
