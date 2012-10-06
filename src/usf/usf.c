@@ -69,6 +69,23 @@ uint32_t get_length_from_string(uint8_t * str_length) {
     return ttime;
 }
 
+void usf_fread(void * ptr, int64_t size, int64_t nmemb, VFSFile * file){
+    int64_t ret;
+    ret = vfs_fread(ptr,size ,nmemb ,file);
+    if( ret != nmemb)
+	printf("Warning, tried reading %ld element(s) but vfs_read returned %ld\n", nmemb, ret);
+}
+
+void usf_fseek(VFSFile * file, int64_t offset, int whence){
+    int ret;
+    ret = vfs_fseek(file, offset, whence);
+    if(ret != 0)
+	printf("Warning, vfs_seek returned %d instead of zero\n", ret);
+}
+
+
+
+
 int LoadUSF(const gchar * fn, VFSFile *fil)
 {
 	uint32_t reservedsize = 0, codesize = 0, crc = 0, tagstart = 0, reservestart = 0;
@@ -89,17 +106,17 @@ int LoadUSF(const gchar * fn, VFSFile *fil)
 		return 0;
 	}
 
-	vfs_fread(buffer,4 ,1 ,fil);
+	usf_fread(buffer,4 ,1 ,fil);
 	if(buffer[0] != 'P' && buffer[1] != 'S' && buffer[2] != 'F' && buffer[3] != 0x21) {
 		printf("Invalid header in file!\n");
 		return 0;
 	}
 
-    vfs_fread(&reservedsize, 4, 1, fil);
-    vfs_fread(&codesize, 4, 1, fil);
-    vfs_fread(&crc, 4, 1, fil);
+	usf_fread(&reservedsize, 4, 1, fil);
+	usf_fread(&codesize, 4, 1, fil);
+	usf_fread(&crc, 4, 1, fil);
 
-    vfs_fseek(fil, 0, SEEK_END);
+	usf_fseek(fil, 0, SEEK_END);
     filesize = vfs_ftell(fil);
 
     reservestart = 0x10;
@@ -107,8 +124,8 @@ int LoadUSF(const gchar * fn, VFSFile *fil)
     tagsize = filesize - tagstart;
 
 	if(tagsize) {
-		vfs_fseek(fil, tagstart, SEEK_SET);
-		vfs_fread(buffer, 5, 1, fil);
+	    usf_fseek(fil, tagstart, SEEK_SET);
+		usf_fread(buffer, 5, 1, fil);
 
 		if(buffer[0] != '[' && buffer[1] != 'T' && buffer[2] != 'A' && buffer[3] != 'G' && buffer[4] != ']') {
 			printf("Erroneous data in tag area! %" PRIu32 "\n", tagsize);
@@ -118,7 +135,7 @@ int LoadUSF(const gchar * fn, VFSFile *fil)
 		buffer2 = malloc(50001);
 		tagbuffer = malloc(tagsize);
 
-    	vfs_fread(tagbuffer, tagsize, 1, fil);
+		usf_fread(tagbuffer, tagsize, 1, fil);
 
 	psftag_raw_getvar((char*)tagbuffer,"_lib",(char*)buffer2,50000);
 
@@ -190,15 +207,15 @@ int LoadUSF(const gchar * fn, VFSFile *fil)
 
 	}
 
-	vfs_fseek(fil, reservestart, SEEK_SET);
-	vfs_fread(&temp, 4, 1, fil);
+	usf_fseek(fil, reservestart, SEEK_SET);
+	usf_fread(&temp, 4, 1, fil);
 
 	if(temp == 0x34365253) { //there is a rom section
 		int len = 0, start = 0;
-		vfs_fread(&len, 4, 1, fil);
+		usf_fread(&len, 4, 1, fil);
 
 		while(len) {
-			vfs_fread(&start, 4, 1, fil);
+		    usf_fread(&start, 4, 1, fil);
 
 			while(len) {
 				int page = start >> 16;
@@ -209,30 +226,30 @@ int LoadUSF(const gchar * fn, VFSFile *fil)
                 	memset(ROMPages[page], 0, 0x10000);
                 }
 
-				vfs_fread(ROMPages[page] + (start & 0xffff), readLen, 1, fil);
+                usf_fread(ROMPages[page] + (start & 0xffff), readLen, 1, fil);
 
 				start += readLen;
 				len -= readLen;
 			}
 
-			vfs_fread(&len, 4, 1, fil);
+			usf_fread(&len, 4, 1, fil);
 		}
 
 	}
 
 
 
-	vfs_fread(&temp, 4, 1, fil);
+	usf_fread(&temp, 4, 1, fil);
 	if(temp == 0x34365253) {
 		int len = 0, start = 0;
-		vfs_fread(&len, 4, 1, fil);
+		usf_fread(&len, 4, 1, fil);
 
 		while(len) {
-			vfs_fread(&start, 4, 1, fil);
+		    usf_fread(&start, 4, 1, fil);
 
-			vfs_fread(savestatespace + start, len, 1, fil);
+		    usf_fread(savestatespace + start, len, 1, fil);
 
-			vfs_fread(&len, 4, 1, fil);
+		    usf_fread(&len, 4, 1, fil);
 		}
 	}
 
@@ -382,18 +399,18 @@ Tuple * usf_get_song_tuple(const gchar * fn, VFSFile *fil)
 		return NULL;
 	}
 
-	vfs_fread(buffer,4 ,1 ,fil);
+	usf_fread(buffer,4 ,1 ,fil);
 
 	if(buffer[0] != 'P' && buffer[1] != 'S' && buffer[2] != 'F' && buffer[3] != 0x21) {
 		printf("Invalid header in file!\n");
 		return NULL;
 	}
 
-    vfs_fread(&reservedsize, 4, 1, fil);
-    vfs_fread(&codesize, 4, 1, fil);
-    vfs_fread(&crc, 4, 1, fil);
+	usf_fread(&reservedsize, 4, 1, fil);
+	usf_fread(&codesize, 4, 1, fil);
+	usf_fread(&crc, 4, 1, fil);
 
-    vfs_fseek(fil, 0, SEEK_END);
+	usf_fseek(fil, 0, SEEK_END);
     filesize = vfs_ftell(fil);
 
     reservestart = 0x10;
@@ -404,8 +421,8 @@ Tuple * usf_get_song_tuple(const gchar * fn, VFSFile *fil)
 
 	if(tagsize) {
 		int temp_fade = 0;
-		vfs_fseek(fil, tagstart, SEEK_SET);
-		vfs_fread(buffer, 5, 1, fil);
+		usf_fseek(fil, tagstart, SEEK_SET);
+		usf_fread(buffer, 5, 1, fil);
 
 		if(buffer[0] != '[' && buffer[1] != 'T' && buffer[2] != 'A' && buffer[3] != 'G' && buffer[4] != ']') {
 			printf("Erroneous data in tag area! %" PRIu32 "\n", tagsize);
@@ -415,7 +432,7 @@ Tuple * usf_get_song_tuple(const gchar * fn, VFSFile *fil)
 		buffer2 = malloc(50001);
 		tagbuffer = malloc(tagsize);
 
-    	vfs_fread(tagbuffer, tagsize, 1, fil);
+		usf_fread(tagbuffer, tagsize, 1, fil);
 
 	psftag_raw_getvar((char*)tagbuffer, "fade", (char*)buffer2, 50000);
 		if(strlen((char*)buffer2))
