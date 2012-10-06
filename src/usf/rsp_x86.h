@@ -32,31 +32,37 @@
 #include "types.h"
 
 enum mmxRegValues {
-	x86_MM0 = 1, x86_MM1 = 2, x86_MM2 = 3, x86_MM3 = 4,
-	x86_MM4 = 5, x86_MM5 = 6, x86_MM6 = 7, x86_MM7 = 8
+    x86_MM0 = 1, x86_MM1 = 2, x86_MM2 = 3, x86_MM3 = 4,
+    x86_MM4 = 5, x86_MM5 = 6, x86_MM6 = 7, x86_MM7 = 8
 };
 
 enum sseRegValues {
-	x86_XMM0 = 1, x86_XMM1 = 2, x86_XMM2 = 3, x86_XMM3 = 4,
-	x86_XMM4 = 5, x86_XMM5 = 6, x86_XMM6 = 7, x86_XMM7 = 8
+    x86_XMM0 = 1, x86_XMM1 = 2, x86_XMM2 = 3, x86_XMM3 = 4,
+    x86_XMM4 = 5, x86_XMM5 = 6, x86_XMM6 = 7, x86_XMM7 = 8
 };
 
 #ifdef USEX64
 enum x86RegValues {
 
-    x86_Any	= 0,
-    x86_EAX,x86_ECX,x86_EDX,x86_EBX,x86_ESP,x86_EBP,x86_ESI,x86_EDI,x86_Any8Bit=0x40,x64_Any = 0x40,
+    x86_Any = 0,
+    x86_EAX, x86_ECX, x86_EDX, x86_EBX, x86_ESP, x86_EBP, x86_ESI, x86_EDI,
+	x86_Any8Bit = 0x40, x64_Any = 0x40,
 
-    x86_RAX = 0x11,x86_RCX,x86_RDX,x86_RBX,x86_RSP,x86_RBP,x86_RSI,x86_RDI,
+    x86_RAX =
+	0x11, x86_RCX, x86_RDX, x86_RBX, x86_RSP, x86_RBP, x86_RSI,
+	x86_RDI,
 
-	x86_R8D = 0x21,x86_R9D,x86_R10D,x86_R11D,x86_R12D,x86_R13D,x86_R14D,x86_R15D,
+    x86_R8D =
+	0x21, x86_R9D, x86_R10D, x86_R11D, x86_R12D, x86_R13D, x86_R14D,
+	x86_R15D,
 
-	x86_R8 = 0x31,x86_R9,x86_R10,x86_R11,x86_R12,x86_R13,x86_R14,x86_R15,
+    x86_R8 =
+	0x31, x86_R9, x86_R10, x86_R11, x86_R12, x86_R13, x86_R14, x86_R15,
 
 };
 
 enum x86FpuValues {
-	x86_ST0,x86_ST1,x86_ST2,x86_ST3,x86_ST4,x86_ST5,x86_ST6,x86_ST7
+    x86_ST0, x86_ST1, x86_ST2, x86_ST3, x86_ST4, x86_ST5, x86_ST6, x86_ST7
 };
 
 #define	x86_TEMP		x86_R8
@@ -76,7 +82,7 @@ enum x86FpuValues {
 	PUTDST8(RSPRecompPos, 0xB8 | (((reg)-1)&0xf)); \
 	PUTDST64(RSPRecompPos,variable);
 
-// 	// 43 0F B6 0C 0D 40 83 C7 04 movzx       ecx,byte ptr [r9+4C78340h]
+//      // 43 0F B6 0C 0D 40 83 C7 04 movzx       ecx,byte ptr [r9+4C78340h]
 
 #define OPCODE_REG_REG(oplen,opcode,reg,rm) \
 	PUTDST8(RSPRecompPos, 0x40 | (((rm)&0x20)>>5) | ((((rm|reg))&0x10)>>1) | (((reg)&0x20)>>3)); \
@@ -173,14 +179,16 @@ enum x86FpuValues {
 
 enum x86RegValues {
 
-    x86_Any	= 0,
-    x86_EAX,x86_ECX,x86_EDX,x86_EBX,x86_ESP,x86_EBP,x86_ESI,x86_EDI,x86_Any8Bit=0x40,x64_Any = 0x0,
-    x86_RAX = 0x1,x86_RCX,x86_RDX,x86_RBX,x86_RSP,x86_RBP,x86_RSI,x86_RDI,
+    x86_Any = 0,
+    x86_EAX, x86_ECX, x86_EDX, x86_EBX, x86_ESP, x86_EBP, x86_ESI, x86_EDI,
+	x86_Any8Bit = 0x40, x64_Any = 0x0,
+    x86_RAX =
+	0x1, x86_RCX, x86_RDX, x86_RBX, x86_RSP, x86_RBP, x86_RSI, x86_RDI,
 
 };
 
 enum x86FpuValues {
-	x86_ST0,x86_ST1,x86_ST2,x86_ST3,x86_ST4,x86_ST5,x86_ST6,x86_ST7
+    x86_ST0, x86_ST1, x86_ST2, x86_ST3, x86_ST4, x86_ST5, x86_ST6, x86_ST7
 };
 
 
@@ -193,7 +201,7 @@ enum x86FpuValues {
 #define OP_D6	7
 #define OP_D7	8
 
-// 	// 43 0F B6 0C 0D 40 83 C7 04 movzx       ecx,byte ptr [r9+4C78340h]
+//      // 43 0F B6 0C 0D 40 83 C7 04 movzx       ecx,byte ptr [r9+4C78340h]
 
 
 #define OPCODE_REG_DISP(oplen,opcode,reg,disp32) \
@@ -323,230 +331,242 @@ enum x86FpuValues {
 #endif
 
 #ifdef USEX64
-	#define LOAD_FROM_DMEM(dstreg,srcreg) MoveX86RegDispToX86Reg(dstreg, x86_R15, srcreg, 8);
+#define LOAD_FROM_DMEM(dstreg,srcreg) MoveX86RegDispToX86Reg(dstreg, x86_R15, srcreg, 8);
 #else
-	#define LOAD_FROM_DMEM(dstreg,srcreg) MoveVariableDispToX86Reg(DMEM,dstreg,srcreg,4);
+#define LOAD_FROM_DMEM(dstreg,srcreg) MoveVariableDispToX86Reg(DMEM,dstreg,srcreg,4);
 #endif
 
 
-void RSPAdcX86RegToX86Reg				( int32_t Destination, int32_t Source );
-void RSPAdcX86regToVariable			( int32_t x86reg, void * Variable );
-void RSPAdcX86regHalfToVariable		( int32_t x86reg, void * Variable );
-void RSPAdcConstToX86reg				( uint8_t Constant, int32_t x86reg );
-void RSPAdcConstToVariable				( void *Variable, uint8_t Constant );
-void RSPAdcConstHalfToVariable			( void *Variable, uint8_t Constant );
-void RSPAddConstToVariable				( uint32_t Const, void *Variable );
-void RSPAddConstToX86Reg				( int32_t x86Reg, uint32_t Const );
-void RSPAddQwordToX86Reg (int32_t x86reg, uint64_t Const);
-void RSPAddVariableToX86reg			( int32_t x86reg, void * Variable );
-void RSPAddX86regToVariable			( int32_t x86reg, void * Variable );
-void RSPAddX86regHalfToVariable		( int32_t x86reg, void * Variable );
-void RSPAddX86RegToX86Reg				( int32_t Destination, int32_t Source );
-void RSPAndConstToVariable				( uint32_t Const, void *Variable );
-void RSPAndConstToX86Reg				( int32_t x86Reg, uint32_t Const );
-void RSPAndVariableToX86Reg			( void * Variable, int32_t x86Reg );
-void RSPAndVariableToX86regHalf		( void * Variable, int32_t x86Reg );
-void RSPAndX86RegToVariable			( void * Variable, int32_t x86Reg );
-void RSPAndX86RegToX86Reg				( int32_t Destination, int32_t Source );
-void RSPAndX86RegHalfToX86RegHalf		( int32_t Destination, int32_t Source );
-void RSPBreakPoint (void);
-void RSPCall_Direct					( void * FunctAddress );
-void RSPCall_Indirect					( void * FunctAddress );
-void RSPCondMoveEqual					( int32_t Destination, int32_t Source );
-void RSPCondMoveNotEqual				( int32_t Destination, int32_t Source );
-void RSPCondMoveGreater				( int32_t Destination, int32_t Source );
-void RSPCondMoveGreaterEqual			( int32_t Destination, int32_t Source );
-void RSPCondMoveLess					( int32_t Destination, int32_t Source );
-void RSPCondMoveLessEqual				( int32_t Destination, int32_t Source );
-void RSPCompConstToVariable			( uint32_t Const, void * Variable );
-void RSPCompConstHalfToVariable		( uint16_t Const, void * Variable );
-void RSPCompConstToX86reg				( int32_t x86Reg, uint32_t Const );
-void RSPCompX86regToVariable			( int32_t x86Reg, void * Variable );
-void RSPCompVariableToX86reg			( int32_t x86Reg, void * Variable );
-void RSPCompX86RegToX86Reg				( int32_t Destination, int32_t Source );
-void RSPMoveConstQwordToX86reg		    ( uintptr_t, int32_t);
-void RSPCwd							( void );
-void RSPCwde							( void );
-void RSPDecX86reg						( int32_t x86Reg );
-void RSPDivX86reg						( int32_t x86reg );
-void RSPidivX86reg						( int32_t x86reg );
-void RSPimulX86reg						( int32_t x86reg );
-void RSPImulX86RegToX86Reg				( int32_t Destination, int32_t Source );
-void RSPIncX86reg						( int32_t x86Reg );
-void RSPJaeLabel32						( uint32_t Value );
-void RSPJaLabel8						( uint8_t Value );
-void RSPJaLabel32						( uint32_t Value );
-void RSPJbLabel8						( uint8_t Value );
-void RSPJbLabel32						( uint32_t Value );
-void RSPJeLabel8						( uint8_t Value );
-void RSPJeLabel32						( uint32_t Value );
-void RSPJgeLabel8						( uint8_t Value );
-void RSPJgeLabel32						( uint32_t Value );
-void RSPJgLabel8						( uint8_t Value );
-void RSPJgLabel32						( uint32_t Value );
-void RSPJleLabel8						( uint8_t Value );
-void RSPJleLabel32						( uint32_t Value );
-void RSPJlLabel8						( uint8_t Value );
-void RSPJlLabel32						( uint32_t Value );
-void RSPJumpX86Reg						( int32_t x86reg );
-void RSPJmpLabel8						( uint8_t Value );
-void RSPJmpLabel32						( uint32_t Value);
-void RSPJneLabel8						( uint8_t Value );
-void RSPJneLabel32						( uint32_t Value );
-void RSPJnsLabel8						( uint8_t Value );
-void RSPJnsLabel32						( uint32_t Value );
-void RSPJsLabel32						( uint32_t Value );
-void RSPLeaSourceAndOffset				( int32_t x86DestReg, int32_t x86SourceReg, int32_t offset );
-void RSPMoveConstByteToN64Mem			( uint8_t Const, int32_t AddrReg );
-void RSPMoveConstHalfToN64Mem			( uint16_t Const, int32_t AddrReg );
-void RSPMoveConstByteToVariable		( uint8_t Const,void *Variable );
-void RSPMoveConstHalfToVariable		( uint16_t Const, void *Variable );
-void RSPMoveConstToN64Mem				( uint32_t Const, int32_t AddrReg );
-void RSPMoveConstToN64MemDisp			( uint32_t Const, int32_t AddrReg, uint8_t Disp );
-void RSPMoveConstToVariable			( uint32_t Const, void *Variable );
-void RSPMoveConstToX86reg				( uint32_t Const, int32_t x86reg );
-void RSPMoveOffsetToX86reg				( uint32_t Const, int32_t x86reg );
-void RSPMoveX86regByteToX86regPointer	( int32_t Source, int32_t AddrReg );
-void RSPMoveX86regHalfToX86regPointer	( int32_t Source, int32_t AddrReg );
-void RSPMoveX86regHalfToX86regPointerDisp ( int32_t Source, int32_t AddrReg, uint8_t Disp);
-void RSPMoveX86regToX86regPointer		( int32_t Source, int32_t AddrReg );
-void RSPMoveX86RegToX86regPointerDisp	( int32_t Source, int32_t AddrReg, uint8_t Disp );
-void RSPMoveX86regPointerToX86regByte	( int32_t Destination, int32_t AddrReg );
-void RSPMoveX86regPointerToX86regHalf	( int32_t Destination, int32_t AddrReg );
-void RSPMoveX86regPointerToX86reg		( int32_t Destination, int32_t AddrReg );
-void RSPMoveN64MemDispToX86reg			( int32_t x86reg, int32_t AddrReg, uint8_t Disp );
-void RSPMoveN64MemToX86reg				( int32_t x86reg, int32_t AddrReg );
-void RSPMoveN64MemToX86regByte			( int32_t x86reg, int32_t AddrReg );
-void RSPMoveN64MemToX86regHalf			( int32_t x86reg, int32_t AddrReg );
-void RSPMoveX86regByteToN64Mem			( int32_t x86reg, int32_t AddrReg );
-void RSPMoveX86regByteToVariable		( int32_t x86reg, void * Variable );
-void RSPMoveX86regHalfToN64Mem			( int32_t x86reg, int32_t AddrReg );
-void RSPMoveX86regHalfToVariable		( int32_t x86reg, void * Variable );
-void RSPMoveX86regToN64Mem				( int32_t x86reg, int32_t AddrReg );
-void RSPMoveX86regToN64MemDisp			( int32_t x86reg, int32_t AddrReg, uint8_t Disp );
-void RSPMoveX86regToVariable			( int32_t x86reg, void * Variable );
-void RSPMoveX86RegToX86Reg				( int32_t Source, int32_t Destination );
-void RSPMoveVariableToX86reg			( void *Variable, int32_t x86reg );
-void RSPMoveVariableToX86regByte		( void *Variable, int32_t x86reg );
-void RSPMoveVariableToX86regHalf		( void *Variable, int32_t x86reg );
-void RSPMoveSxX86RegHalfToX86Reg		( int32_t Source, int32_t Destination );
-void RSPMoveSxX86RegPtrDispToX86RegHalf( int32_t AddrReg, uint8_t Disp, int32_t Destination );
-void RSPMoveSxN64MemToX86regByte		( int32_t x86reg, int32_t AddrReg );
-void RSPMoveSxN64MemToX86regHalf		( int32_t x86reg, int32_t AddrReg );
-void RSPMoveSxVariableToX86regHalf		( void *Variable, int32_t x86reg );
-void RSPMoveZxX86RegHalfToX86Reg		( int32_t Source, int32_t Destination );
-void RSPMoveZxX86RegPtrDispToX86RegHalf( int32_t AddrReg, uint8_t Disp, int32_t Destination );
-void RSPMoveZxN64MemToX86regByte		( int32_t x86reg, int32_t AddrReg );
-void RSPMoveZxN64MemToX86regHalf		( int32_t x86reg, int32_t AddrReg );
-void RSPMoveZxVariableToX86regHalf		( void *Variable, int32_t x86reg );
-void RSPMulX86reg						( int32_t x86reg );
-void RSPNegateX86reg					( int32_t x86reg );
-void RSPOrConstToVariable				( uint32_t Const, void * Variable );
-void RSPOrConstToX86Reg				( uint32_t Const, int32_t  x86Reg );
-void RSPOrVariableToX86Reg				( void * Variable, int32_t x86Reg );
-void RSPOrVariableToX86regHalf			( void * Variable, int32_t x86Reg );
-void RSPOrX86RegToVariable				( void * Variable, int32_t x86Reg );
-void RSPOrX86RegToX86Reg				( int32_t Destination, int32_t Source );
-void RSPPopad							( void );
-void RSPPushad							( void );
-void RSPPush							( int32_t x86reg );
-void RSPPop							( int32_t x86reg );
-void RSPPushImm32						( uint32_t Value );
-void RSPRet							( void );
-void RSPSeta							( int32_t x86reg );
-void RSPSetae							( int32_t x86reg );
-void RSPSetl							( int32_t x86reg );
-void RSPSetb							( int32_t x86reg );
-void RSPSetg							( int32_t x86reg );
-void RSPSetz							( int32_t x86reg );
-void RSPSetnz							( int32_t x86reg );
-void RSPSetlVariable					( void * Variable );
-void RSPSetleVariable					( void * Variable );
-void RSPSetgVariable					( void * Variable );
-void RSPSetgeVariable					( void * Variable );
-void RSPSetbVariable					( void * Variable );
-void RSPSetaVariable					( void * Variable );
-void RSPSetzVariable					( void * Variable );
-void RSPSetnzVariable					( void * Variable );
-void RSPShiftLeftSign					( int32_t x86reg );
-void RSPShiftLeftSignImmed				( int32_t x86reg, uint8_t Immediate );
-void RSPShiftLeftSignVariableImmed		( void *Variable, uint8_t Immediate );
-void RSPShiftRightSignImmed			( int32_t x86reg, uint8_t Immediate );
-void RSPShiftRightSignVariableImmed	( void *Variable, uint8_t Immediate );
-void RSPShiftRightUnsign				( int32_t x86reg );
-void RSPShiftRightUnsignImmed			( int32_t x86reg, uint8_t Immediate );
-void RSPShiftRightUnsignVariableImmed	( void *Variable, uint8_t Immediate );
-void RSPShiftLeftDoubleImmed			( int32_t Destination, int32_t Source, uint8_t Immediate );
-void RSPShiftRightDoubleImmed			( int32_t Destination, int32_t Source, uint8_t Immediate );
-void RSPSubConstFromVariable			( uint32_t Const, void *Variable );
-void RSPSubConstFromX86Reg				( int32_t x86Reg, uint32_t Const );
-void RSPSubVariableFromX86reg			( int32_t x86reg, void * Variable );
-void RSPSubX86RegToX86Reg				( int32_t Destination, int32_t Source );
-void RSPSubX86regFromVariable			( int32_t x86reg, void * Variable );
-void RSPSbbX86RegToX86Reg				( int32_t Destination, int32_t Source );
-void RSPTestConstToVariable			( uint32_t Const, void * Variable );
-void RSPTestConstToX86Reg				( uint32_t Const, int32_t x86reg );
-void RSPTestX86RegToX86Reg				( int32_t Destination, int32_t Source );
-void RSPXorConstToX86Reg				( int32_t x86Reg, uint32_t Const );
-void RSPXorX86RegToX86Reg				( int32_t Source, int32_t Destination );
-void RSPXorVariableToX86reg			( void *Variable, int32_t x86reg );
-void RSPXorX86RegToVariable			( void *Variable, int32_t x86reg );
-void RSPXorConstToVariable				( void *Variable, uint32_t Const );
+void RSPAdcX86RegToX86Reg(int32_t Destination, int32_t Source);
+void RSPAdcX86regToVariable(int32_t x86reg, void *Variable);
+void RSPAdcX86regHalfToVariable(int32_t x86reg, void *Variable);
+void RSPAdcConstToX86reg(uint8_t Constant, int32_t x86reg);
+void RSPAdcConstToVariable(void *Variable, uint8_t Constant);
+void RSPAdcConstHalfToVariable(void *Variable, uint8_t Constant);
+void RSPAddConstToVariable(uint32_t Const, void *Variable);
+void RSPAddConstToX86Reg(int32_t x86Reg, uint32_t Const);
+void RSPAddQwordToX86Reg(int32_t x86reg, uint64_t Const);
+void RSPAddVariableToX86reg(int32_t x86reg, void *Variable);
+void RSPAddX86regToVariable(int32_t x86reg, void *Variable);
+void RSPAddX86regHalfToVariable(int32_t x86reg, void *Variable);
+void RSPAddX86RegToX86Reg(int32_t Destination, int32_t Source);
+void RSPAndConstToVariable(uint32_t Const, void *Variable);
+void RSPAndConstToX86Reg(int32_t x86Reg, uint32_t Const);
+void RSPAndVariableToX86Reg(void *Variable, int32_t x86Reg);
+void RSPAndVariableToX86regHalf(void *Variable, int32_t x86Reg);
+void RSPAndX86RegToVariable(void *Variable, int32_t x86Reg);
+void RSPAndX86RegToX86Reg(int32_t Destination, int32_t Source);
+void RSPAndX86RegHalfToX86RegHalf(int32_t Destination, int32_t Source);
+void RSPBreakPoint(void);
+void RSPCall_Direct(void *FunctAddress);
+void RSPCall_Indirect(void *FunctAddress);
+void RSPCondMoveEqual(int32_t Destination, int32_t Source);
+void RSPCondMoveNotEqual(int32_t Destination, int32_t Source);
+void RSPCondMoveGreater(int32_t Destination, int32_t Source);
+void RSPCondMoveGreaterEqual(int32_t Destination, int32_t Source);
+void RSPCondMoveLess(int32_t Destination, int32_t Source);
+void RSPCondMoveLessEqual(int32_t Destination, int32_t Source);
+void RSPCompConstToVariable(uint32_t Const, void *Variable);
+void RSPCompConstHalfToVariable(uint16_t Const, void *Variable);
+void RSPCompConstToX86reg(int32_t x86Reg, uint32_t Const);
+void RSPCompX86regToVariable(int32_t x86Reg, void *Variable);
+void RSPCompVariableToX86reg(int32_t x86Reg, void *Variable);
+void RSPCompX86RegToX86Reg(int32_t Destination, int32_t Source);
+void RSPMoveConstQwordToX86reg(uintptr_t, int32_t);
+void RSPCwd(void);
+void RSPCwde(void);
+void RSPDecX86reg(int32_t x86Reg);
+void RSPDivX86reg(int32_t x86reg);
+void RSPidivX86reg(int32_t x86reg);
+void RSPimulX86reg(int32_t x86reg);
+void RSPImulX86RegToX86Reg(int32_t Destination, int32_t Source);
+void RSPIncX86reg(int32_t x86Reg);
+void RSPJaeLabel32(uint32_t Value);
+void RSPJaLabel8(uint8_t Value);
+void RSPJaLabel32(uint32_t Value);
+void RSPJbLabel8(uint8_t Value);
+void RSPJbLabel32(uint32_t Value);
+void RSPJeLabel8(uint8_t Value);
+void RSPJeLabel32(uint32_t Value);
+void RSPJgeLabel8(uint8_t Value);
+void RSPJgeLabel32(uint32_t Value);
+void RSPJgLabel8(uint8_t Value);
+void RSPJgLabel32(uint32_t Value);
+void RSPJleLabel8(uint8_t Value);
+void RSPJleLabel32(uint32_t Value);
+void RSPJlLabel8(uint8_t Value);
+void RSPJlLabel32(uint32_t Value);
+void RSPJumpX86Reg(int32_t x86reg);
+void RSPJmpLabel8(uint8_t Value);
+void RSPJmpLabel32(uint32_t Value);
+void RSPJneLabel8(uint8_t Value);
+void RSPJneLabel32(uint32_t Value);
+void RSPJnsLabel8(uint8_t Value);
+void RSPJnsLabel32(uint32_t Value);
+void RSPJsLabel32(uint32_t Value);
+void RSPLeaSourceAndOffset(int32_t x86DestReg, int32_t x86SourceReg,
+			   int32_t offset);
+void RSPMoveConstByteToN64Mem(uint8_t Const, int32_t AddrReg);
+void RSPMoveConstHalfToN64Mem(uint16_t Const, int32_t AddrReg);
+void RSPMoveConstByteToVariable(uint8_t Const, void *Variable);
+void RSPMoveConstHalfToVariable(uint16_t Const, void *Variable);
+void RSPMoveConstToN64Mem(uint32_t Const, int32_t AddrReg);
+void RSPMoveConstToN64MemDisp(uint32_t Const, int32_t AddrReg,
+			      uint8_t Disp);
+void RSPMoveConstToVariable(uint32_t Const, void *Variable);
+void RSPMoveConstToX86reg(uint32_t Const, int32_t x86reg);
+void RSPMoveOffsetToX86reg(uint32_t Const, int32_t x86reg);
+void RSPMoveX86regByteToX86regPointer(int32_t Source, int32_t AddrReg);
+void RSPMoveX86regHalfToX86regPointer(int32_t Source, int32_t AddrReg);
+void RSPMoveX86regHalfToX86regPointerDisp(int32_t Source, int32_t AddrReg,
+					  uint8_t Disp);
+void RSPMoveX86regToX86regPointer(int32_t Source, int32_t AddrReg);
+void RSPMoveX86RegToX86regPointerDisp(int32_t Source, int32_t AddrReg,
+				      uint8_t Disp);
+void RSPMoveX86regPointerToX86regByte(int32_t Destination,
+				      int32_t AddrReg);
+void RSPMoveX86regPointerToX86regHalf(int32_t Destination,
+				      int32_t AddrReg);
+void RSPMoveX86regPointerToX86reg(int32_t Destination, int32_t AddrReg);
+void RSPMoveN64MemDispToX86reg(int32_t x86reg, int32_t AddrReg,
+			       uint8_t Disp);
+void RSPMoveN64MemToX86reg(int32_t x86reg, int32_t AddrReg);
+void RSPMoveN64MemToX86regByte(int32_t x86reg, int32_t AddrReg);
+void RSPMoveN64MemToX86regHalf(int32_t x86reg, int32_t AddrReg);
+void RSPMoveX86regByteToN64Mem(int32_t x86reg, int32_t AddrReg);
+void RSPMoveX86regByteToVariable(int32_t x86reg, void *Variable);
+void RSPMoveX86regHalfToN64Mem(int32_t x86reg, int32_t AddrReg);
+void RSPMoveX86regHalfToVariable(int32_t x86reg, void *Variable);
+void RSPMoveX86regToN64Mem(int32_t x86reg, int32_t AddrReg);
+void RSPMoveX86regToN64MemDisp(int32_t x86reg, int32_t AddrReg,
+			       uint8_t Disp);
+void RSPMoveX86regToVariable(int32_t x86reg, void *Variable);
+void RSPMoveX86RegToX86Reg(int32_t Source, int32_t Destination);
+void RSPMoveVariableToX86reg(void *Variable, int32_t x86reg);
+void RSPMoveVariableToX86regByte(void *Variable, int32_t x86reg);
+void RSPMoveVariableToX86regHalf(void *Variable, int32_t x86reg);
+void RSPMoveSxX86RegHalfToX86Reg(int32_t Source, int32_t Destination);
+void RSPMoveSxX86RegPtrDispToX86RegHalf(int32_t AddrReg, uint8_t Disp,
+					int32_t Destination);
+void RSPMoveSxN64MemToX86regByte(int32_t x86reg, int32_t AddrReg);
+void RSPMoveSxN64MemToX86regHalf(int32_t x86reg, int32_t AddrReg);
+void RSPMoveSxVariableToX86regHalf(void *Variable, int32_t x86reg);
+void RSPMoveZxX86RegHalfToX86Reg(int32_t Source, int32_t Destination);
+void RSPMoveZxX86RegPtrDispToX86RegHalf(int32_t AddrReg, uint8_t Disp,
+					int32_t Destination);
+void RSPMoveZxN64MemToX86regByte(int32_t x86reg, int32_t AddrReg);
+void RSPMoveZxN64MemToX86regHalf(int32_t x86reg, int32_t AddrReg);
+void RSPMoveZxVariableToX86regHalf(void *Variable, int32_t x86reg);
+void RSPMulX86reg(int32_t x86reg);
+void RSPNegateX86reg(int32_t x86reg);
+void RSPOrConstToVariable(uint32_t Const, void *Variable);
+void RSPOrConstToX86Reg(uint32_t Const, int32_t x86Reg);
+void RSPOrVariableToX86Reg(void *Variable, int32_t x86Reg);
+void RSPOrVariableToX86regHalf(void *Variable, int32_t x86Reg);
+void RSPOrX86RegToVariable(void *Variable, int32_t x86Reg);
+void RSPOrX86RegToX86Reg(int32_t Destination, int32_t Source);
+void RSPPopad(void);
+void RSPPushad(void);
+void RSPPush(int32_t x86reg);
+void RSPPop(int32_t x86reg);
+void RSPPushImm32(uint32_t Value);
+void RSPRet(void);
+void RSPSeta(int32_t x86reg);
+void RSPSetae(int32_t x86reg);
+void RSPSetl(int32_t x86reg);
+void RSPSetb(int32_t x86reg);
+void RSPSetg(int32_t x86reg);
+void RSPSetz(int32_t x86reg);
+void RSPSetnz(int32_t x86reg);
+void RSPSetlVariable(void *Variable);
+void RSPSetleVariable(void *Variable);
+void RSPSetgVariable(void *Variable);
+void RSPSetgeVariable(void *Variable);
+void RSPSetbVariable(void *Variable);
+void RSPSetaVariable(void *Variable);
+void RSPSetzVariable(void *Variable);
+void RSPSetnzVariable(void *Variable);
+void RSPShiftLeftSign(int32_t x86reg);
+void RSPShiftLeftSignImmed(int32_t x86reg, uint8_t Immediate);
+void RSPShiftLeftSignVariableImmed(void *Variable, uint8_t Immediate);
+void RSPShiftRightSignImmed(int32_t x86reg, uint8_t Immediate);
+void RSPShiftRightSignVariableImmed(void *Variable, uint8_t Immediate);
+void RSPShiftRightUnsign(int32_t x86reg);
+void RSPShiftRightUnsignImmed(int32_t x86reg, uint8_t Immediate);
+void RSPShiftRightUnsignVariableImmed(void *Variable, uint8_t Immediate);
+void RSPShiftLeftDoubleImmed(int32_t Destination, int32_t Source,
+			     uint8_t Immediate);
+void RSPShiftRightDoubleImmed(int32_t Destination, int32_t Source,
+			      uint8_t Immediate);
+void RSPSubConstFromVariable(uint32_t Const, void *Variable);
+void RSPSubConstFromX86Reg(int32_t x86Reg, uint32_t Const);
+void RSPSubVariableFromX86reg(int32_t x86reg, void *Variable);
+void RSPSubX86RegToX86Reg(int32_t Destination, int32_t Source);
+void RSPSubX86regFromVariable(int32_t x86reg, void *Variable);
+void RSPSbbX86RegToX86Reg(int32_t Destination, int32_t Source);
+void RSPTestConstToVariable(uint32_t Const, void *Variable);
+void RSPTestConstToX86Reg(uint32_t Const, int32_t x86reg);
+void RSPTestX86RegToX86Reg(int32_t Destination, int32_t Source);
+void RSPXorConstToX86Reg(int32_t x86Reg, uint32_t Const);
+void RSPXorX86RegToX86Reg(int32_t Source, int32_t Destination);
+void RSPXorVariableToX86reg(void *Variable, int32_t x86reg);
+void RSPXorX86RegToVariable(void *Variable, int32_t x86reg);
+void RSPXorConstToVariable(void *Variable, uint32_t Const);
 
 #define _MMX_SHUFFLE(a, b, c, d)	\
 	((uint8_t)(((a) << 6) | ((b) << 4) | ((c) << 2) | (d)))
 
-void RSPMmxMoveRegToReg				( int32_t Dest, int32_t Source );
-void RSPMmxMoveQwordRegToVariable		( int32_t Dest, void *Variable );
-void RSPMmxMoveQwordVariableToReg		( int32_t Dest, void *Variable );
-void RSPMmxPandRegToReg				( int32_t Dest, int32_t Source );
-void RSPMmxPandnRegToReg				( int32_t Dest, int32_t Source );
-void RSPMmxPandVariableToReg			( void * Variable, int32_t Dest );
-void RSPMmxPorRegToReg					( int32_t Dest, int32_t Source );
-void RSPMmxPorVariableToReg			( void * Variable, int32_t Dest );
-void RSPMmxXorRegToReg					( int32_t Dest, int32_t Source );
-void RSPMmxShuffleMemoryToReg			( int32_t Dest, void * Variable, uint8_t Immed );
-void RSPMmxPmullwRegToReg				( int32_t Dest, int32_t Source );
-void RSPMmxPmullwVariableToReg			( int32_t Dest, void * Variable );
-void RSPMmxPmulhuwRegToReg				( int32_t Dest, int32_t Source );
-void RSPMmxPmulhwRegToReg				( int32_t Dest, int32_t Source );
-void RSPMmxPmulhwRegToVariable			( int32_t Dest, void * Variable );
-void RSPMmxPsrlwImmed					( int32_t Dest, uint8_t Immed );
-void RSPMmxPsrawImmed					( int32_t Dest, uint8_t Immed );
-void RSPMmxPsllwImmed					( int32_t Dest, uint8_t Immed );
-void RSPMmxPaddswRegToReg				( int32_t Dest, int32_t Source );
-void RSPMmxPaddswVariableToReg			( int32_t Dest, void * Variable );
-void RSPMmxPaddwRegToReg				( int32_t Dest, int32_t Source );
-void RSPMmxPackSignedDwords			( int32_t Dest, int32_t Source );
-void RSPMmxUnpackLowWord				( int32_t Dest, int32_t Source );
-void RSPMmxUnpackHighWord				( int32_t Dest, int32_t Source );
-void RSPMmxCompareGreaterWordRegToReg	( int32_t Dest, int32_t Source );
-void RSPMmxEmptyMultimediaState		( void );
+void RSPMmxMoveRegToReg(int32_t Dest, int32_t Source);
+void RSPMmxMoveQwordRegToVariable(int32_t Dest, void *Variable);
+void RSPMmxMoveQwordVariableToReg(int32_t Dest, void *Variable);
+void RSPMmxPandRegToReg(int32_t Dest, int32_t Source);
+void RSPMmxPandnRegToReg(int32_t Dest, int32_t Source);
+void RSPMmxPandVariableToReg(void *Variable, int32_t Dest);
+void RSPMmxPorRegToReg(int32_t Dest, int32_t Source);
+void RSPMmxPorVariableToReg(void *Variable, int32_t Dest);
+void RSPMmxXorRegToReg(int32_t Dest, int32_t Source);
+void RSPMmxShuffleMemoryToReg(int32_t Dest, void *Variable, uint8_t Immed);
+void RSPMmxPmullwRegToReg(int32_t Dest, int32_t Source);
+void RSPMmxPmullwVariableToReg(int32_t Dest, void *Variable);
+void RSPMmxPmulhuwRegToReg(int32_t Dest, int32_t Source);
+void RSPMmxPmulhwRegToReg(int32_t Dest, int32_t Source);
+void RSPMmxPmulhwRegToVariable(int32_t Dest, void *Variable);
+void RSPMmxPsrlwImmed(int32_t Dest, uint8_t Immed);
+void RSPMmxPsrawImmed(int32_t Dest, uint8_t Immed);
+void RSPMmxPsllwImmed(int32_t Dest, uint8_t Immed);
+void RSPMmxPaddswRegToReg(int32_t Dest, int32_t Source);
+void RSPMmxPaddswVariableToReg(int32_t Dest, void *Variable);
+void RSPMmxPaddwRegToReg(int32_t Dest, int32_t Source);
+void RSPMmxPackSignedDwords(int32_t Dest, int32_t Source);
+void RSPMmxUnpackLowWord(int32_t Dest, int32_t Source);
+void RSPMmxUnpackHighWord(int32_t Dest, int32_t Source);
+void RSPMmxCompareGreaterWordRegToReg(int32_t Dest, int32_t Source);
+void RSPMmxEmptyMultimediaState(void);
 
-void RSPSseMoveAlignedVariableToReg	( void *Variable, int32_t sseReg );
-void RSPSseMoveAlignedRegToVariable	( int32_t sseReg, void *Variable );
-void RSPSseMoveAlignedN64MemToReg		( int32_t sseReg, int32_t AddrReg );
-void RSPSseMoveAlignedRegToN64Mem		( int32_t sseReg, int32_t AddrReg );
-void RSPSseMoveUnalignedVariableToReg	( void *Variable, int32_t sseReg );
-void RSPSseMoveUnalignedRegToVariable	( int32_t sseReg, void *Variable );
-void RSPSseMoveUnalignedN64MemToReg	( int32_t sseReg, int32_t AddrReg );
-void RSPSseMoveUnalignedRegToN64Mem	( int32_t sseReg, int32_t AddrReg );
-void RSPSseMoveRegToReg				( int32_t Dest, int32_t Source );
-void RSPSseXorRegToReg					( int32_t Dest, int32_t Source );
+void RSPSseMoveAlignedVariableToReg(void *Variable, int32_t sseReg);
+void RSPSseMoveAlignedRegToVariable(int32_t sseReg, void *Variable);
+void RSPSseMoveAlignedN64MemToReg(int32_t sseReg, int32_t AddrReg);
+void RSPSseMoveAlignedRegToN64Mem(int32_t sseReg, int32_t AddrReg);
+void RSPSseMoveUnalignedVariableToReg(void *Variable, int32_t sseReg);
+void RSPSseMoveUnalignedRegToVariable(int32_t sseReg, void *Variable);
+void RSPSseMoveUnalignedN64MemToReg(int32_t sseReg, int32_t AddrReg);
+void RSPSseMoveUnalignedRegToN64Mem(int32_t sseReg, int32_t AddrReg);
+void RSPSseMoveRegToReg(int32_t Dest, int32_t Source);
+void RSPSseXorRegToReg(int32_t Dest, int32_t Source);
 
 typedef struct {
-	union {
-		struct {
-			unsigned Reg0 : 2;
-			unsigned Reg1 : 2;
-			unsigned Reg2 : 2;
-			unsigned Reg3 : 2;
-		};
-		unsigned UB:8;
+    union {
+	struct {
+	    unsigned Reg0:2;
+	    unsigned Reg1:2;
+	    unsigned Reg2:2;
+	    unsigned Reg3:2;
 	};
+	unsigned UB:8;
+    };
 } SHUFFLE;
 
-void RSPSseShuffleReg					( int32_t Dest, int32_t Source, uint8_t Immed );
+void RSPSseShuffleReg(int32_t Dest, int32_t Source, uint8_t Immed);
 
-void RSPx86_SetBranch32b(void * JumpByte, void * Destination);
-void RSPx86_SetBranch8b(void * JumpByte, void * Destination);
+void RSPx86_SetBranch32b(void *JumpByte, void *Destination);
+void RSPx86_SetBranch8b(void *JumpByte, void *Destination);

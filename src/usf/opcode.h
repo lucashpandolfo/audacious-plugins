@@ -22,58 +22,50 @@
  * The copyright holders request that bug fixes and improvements to the code
  * should be forwarded to them so if they want them.
  *
- */
+ */  
 #ifndef __OpCode
 #define __OpCode
-
+    
 #include "types.h"
-
-typedef struct {
-	union {
-
-		uint32_t Hex;
-		uint8_t Ascii[4];
-
-		struct {
-			unsigned offset : 16;
-			unsigned rt : 5;
-			unsigned rs : 5;
-			unsigned op : 6;
-		};
-
-		struct {
-			unsigned immediate : 16;
-			unsigned : 5;
-			unsigned base : 5;
-			unsigned : 6;
-		};
-
-		struct {
-			unsigned target : 26;
-			unsigned : 6;
-		};
-
-		struct {
-			unsigned funct : 6;
-			unsigned sa : 5;
-			unsigned rd : 5;
-			unsigned : 5;
-			unsigned : 5;
-			unsigned : 6;
-		};
-
-		struct {
-			unsigned : 6;
-			unsigned fd : 5;
-			unsigned fs : 5;
-			unsigned ft : 5;
-			unsigned fmt : 5;
-			unsigned : 6;
-		};
-	};
-
-} OPCODE;
-
+    typedef struct {
+    union {
+	uint32_t Hex;
+	uint8_t Ascii[4];
+	struct {
+	    unsigned offset:16;
+	     unsigned rt:5;
+	     unsigned rs:5;
+	     unsigned op:6;
+	};
+	  struct {
+	    unsigned immediate:16;
+	     unsigned:5;
+	     unsigned base:5;
+	     unsigned:6;
+	};
+	  struct {
+	    unsigned target:26;
+	     unsigned:6;
+	};
+	  struct {
+	    unsigned funct:6;
+	     unsigned sa:5;
+	     unsigned rd:5;
+	     unsigned:5;
+	     unsigned:5;
+	     unsigned:6;
+	};
+	  struct {
+	    unsigned:6;
+	     unsigned fd:5;
+	     unsigned fs:5;
+	     unsigned ft:5;
+	     unsigned fmt:5;
+	     unsigned:6;
+	};
+    };
+ } OPCODE;
+
 //R4300i OpCodes
 #define	R4300i_SPECIAL				 0
 #define	R4300i_REGIMM				 1
@@ -131,8 +123,8 @@ typedef struct {
 #define R4300i_SDC1					61
 #define R4300i_SDC2					62
 #define R4300i_SD					63
-
-/* R4300i Special opcodes */
+    
+/* R4300i Special opcodes */ 
 #define R4300i_SPECIAL_SLL			 0
 #define R4300i_SPECIAL_SRL			 2
 #define R4300i_SPECIAL_SRA			 3
@@ -185,8 +177,8 @@ typedef struct {
 #define R4300i_SPECIAL_DSLL32		60
 #define R4300i_SPECIAL_DSRL32		62
 #define R4300i_SPECIAL_DSRA32		63
-
-/* R4300i RegImm opcodes */
+    
+/* R4300i RegImm opcodes */ 
 #define R4300i_REGIMM_BLTZ			0
 #define R4300i_REGIMM_BGEZ			1
 #define R4300i_REGIMM_BLTZL			2
@@ -201,19 +193,19 @@ typedef struct {
 #define R4300i_REGIMM_BGEZAL		17
 #define R4300i_REGIMM_BLTZALL		0x12
 #define R4300i_REGIMM_BGEZALL		0x13
-
-/* R4300i COP0 opcodes */
+    
+/* R4300i COP0 opcodes */ 
 #define	R4300i_COP0_MF				 0
 #define	R4300i_COP0_MT				 4
-
-/* R4300i COP0 CO opcodes */
+    
+/* R4300i COP0 CO opcodes */ 
 #define R4300i_COP0_CO_TLBR			1
 #define R4300i_COP0_CO_TLBWI		2
 #define R4300i_COP0_CO_TLBWR		6
 #define R4300i_COP0_CO_TLBP			8
 #define R4300i_COP0_CO_ERET			24
-
-/* R4300i COP1 opcodes */
+    
+/* R4300i COP1 opcodes */ 
 #define	R4300i_COP1_MF				0
 #define	R4300i_COP1_DMF				1
 #define	R4300i_COP1_CF				2
@@ -225,13 +217,13 @@ typedef struct {
 #define R4300i_COP1_D				17
 #define R4300i_COP1_W				20
 #define R4300i_COP1_L				21
-
-/* R4300i COP1 BC opcodes */
+    
+/* R4300i COP1 BC opcodes */ 
 #define	R4300i_COP1_BC_BCF			0
 #define	R4300i_COP1_BC_BCT			1
 #define	R4300i_COP1_BC_BCFL			2
 #define	R4300i_COP1_BC_BCTL			3
-
+    
 #define R4300i_COP1_FUNCT_ADD		 0
 #define R4300i_COP1_FUNCT_SUB		 1
 #define R4300i_COP1_FUNCT_MUL		 2
@@ -268,7 +260,6 @@ typedef struct {
 #define R4300i_COP1_FUNCT_C_NGE		61
 #define R4300i_COP1_FUNCT_C_LE		62
 #define R4300i_COP1_FUNCT_C_NGT		63
-
-#endif
-
-
+    
+#endif	/*  */
+    

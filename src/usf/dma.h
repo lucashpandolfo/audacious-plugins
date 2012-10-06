@@ -22,13 +22,11 @@
  * The copyright holders request that bug fixes and improvements to the code
  * should be forwarded to them so if they want them.
  *
- */
-void PI_DMA_READ  ( void );
-void PI_DMA_WRITE ( void );
-void SI_DMA_READ  ( void );
-void SI_DMA_WRITE ( void );
-void SP_DMA_READ  ( void );
-void SP_DMA_WRITE ( void );
-
-
-
+ */  
+void PI_DMA_READ(void);
+void PI_DMA_WRITE(void);
+void SI_DMA_READ(void);
+void SI_DMA_WRITE(void);
+void SP_DMA_READ(void);
+void SP_DMA_WRITE(void);
+

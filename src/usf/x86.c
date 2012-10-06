@@ -1012,4 +1012,3 @@ void XorVariableToX86reg(void *Variable, int32_t x86reg)
 {
     OPCODE_REG_VARIABLE(, 8, 0x33, x86reg, Variable);
 }
-

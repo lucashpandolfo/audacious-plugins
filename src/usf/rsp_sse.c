@@ -31,54 +31,65 @@
 #include "memory.h"
 #include "types.h"
 
-extern uint8_t * DMEM;
+extern uint8_t *DMEM;
 
 #define PUTDST8(dest,value)  (*((uint8_t *)(dest))=(uint8_t)(value)); dest += 1;
 #define PUTDST16(dest,value) (*((uint16_t *)(dest))=(uint16_t)(value)); dest += 2;
 #define PUTDST32(dest,value) (*((uint32_t *)(dest))=(uint32_t)(value)); dest += 4;
 #define PUTDST64(dest,value) {(*((uint64_t *)(dest))=(uint64_t)(value)); dest += 8;}
 
-void RSPSseMoveAlignedVariableToReg(void * Variable, int32_t sseReg) {
-    OPCODE_REG_VARIABLE(,16,0x100F,sseReg,Variable);
+void RSPSseMoveAlignedVariableToReg(void *Variable, int32_t sseReg)
+{
+    OPCODE_REG_VARIABLE(, 16, 0x100F, sseReg, Variable);
 }
 
-void RSPSseMoveAlignedN64MemToReg(int32_t sseReg, int32_t AddrReg) {
-    OPCODE_REG_ADDR_DMEM(,16,0x100F,sseReg,AddrReg);
+void RSPSseMoveAlignedN64MemToReg(int32_t sseReg, int32_t AddrReg)
+{
+    OPCODE_REG_ADDR_DMEM(, 16, 0x100F, sseReg, AddrReg);
 }
 
-void RSPSseMoveAlignedRegToVariable(int32_t sseReg, void *Variable) {
-    OPCODE_REG_VARIABLE(,16,0x110f,sseReg,Variable); //290F
+void RSPSseMoveAlignedRegToVariable(int32_t sseReg, void *Variable)
+{
+    OPCODE_REG_VARIABLE(, 16, 0x110f, sseReg, Variable);	//290F
 }
 
-void RSPSseMoveAlignedRegToN64Mem(int32_t sseReg, int32_t AddrReg) {
-	OPCODE_REG_ADDR_DMEM(,16,0x110f,sseReg,AddrReg); //290F
+void RSPSseMoveAlignedRegToN64Mem(int32_t sseReg, int32_t AddrReg)
+{
+    OPCODE_REG_ADDR_DMEM(, 16, 0x110f, sseReg, AddrReg);	//290F
 }
 
-void RSPSseMoveUnalignedVariableToReg(void *Variable, int32_t sseReg) {
-	OPCODE_REG_VARIABLE(,16,0x100F,sseReg,Variable);
+void RSPSseMoveUnalignedVariableToReg(void *Variable, int32_t sseReg)
+{
+    OPCODE_REG_VARIABLE(, 16, 0x100F, sseReg, Variable);
 }
 
-void RSPSseMoveUnalignedN64MemToReg(int32_t sseReg, int32_t AddrReg) {
-	OPCODE_REG_ADDR_DMEM(,16,0x100f,sseReg,AddrReg);
+void RSPSseMoveUnalignedN64MemToReg(int32_t sseReg, int32_t AddrReg)
+{
+    OPCODE_REG_ADDR_DMEM(, 16, 0x100f, sseReg, AddrReg);
 }
 
-void RSPSseMoveUnalignedRegToVariable(int32_t sseReg, void *Variable) {
-	OPCODE_REG_VARIABLE(,16,0x110F,sseReg,Variable);
+void RSPSseMoveUnalignedRegToVariable(int32_t sseReg, void *Variable)
+{
+    OPCODE_REG_VARIABLE(, 16, 0x110F, sseReg, Variable);
 }
 
-void RSPSseMoveUnalignedRegToN64Mem(int32_t sseReg, int32_t AddrReg) {
-	OPCODE_REG_ADDR_DMEM(,16,0x110f,sseReg,AddrReg);
+void RSPSseMoveUnalignedRegToN64Mem(int32_t sseReg, int32_t AddrReg)
+{
+    OPCODE_REG_ADDR_DMEM(, 16, 0x110f, sseReg, AddrReg);
 }
 
-void RSPSseMoveRegToReg(int32_t Dest, int32_t Source) {
-	OPCODE_REG_REG(16,0x280F,Dest,Source)
+void RSPSseMoveRegToReg(int32_t Dest, int32_t Source)
+{
+    OPCODE_REG_REG(16, 0x280F, Dest, Source)
 }
 
-void RSPSseXorRegToReg(int32_t Dest, int32_t Source) {
-	OPCODE_REG_REG(16,0x570F,Dest,Source)
+void RSPSseXorRegToReg(int32_t Dest, int32_t Source)
+{
+    OPCODE_REG_REG(16, 0x570F, Dest, Source)
 }
 
-void RSPSseShuffleReg(int32_t Dest, int32_t Source, uint8_t Immed) {
-	OPCODE_REG_REG(16,0xC60F,Dest,Source)
+void RSPSseShuffleReg(int32_t Dest, int32_t Source, uint8_t Immed)
+{
+    OPCODE_REG_REG(16, 0xC60F, Dest, Source)
 	PUTDST8(RSPRecompPos, Immed);
 }

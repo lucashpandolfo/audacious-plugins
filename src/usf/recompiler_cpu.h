@@ -117,121 +117,123 @@
 #define CurrentRoundingModel	Section->RegWorking.RoundingModel
 
 typedef struct {
-	//r4k
-	int32_t		    MIPS_RegState[32];
-	MIPS_DWORD		MIPS_RegVal[32];
+    //r4k
+    int32_t MIPS_RegState[32];
+    MIPS_DWORD MIPS_RegVal[32];
 
-	uint32_t		x86reg_MappedTo[64];
-	uint32_t		x86reg_MapOrder[64];
-	uint32_t		x86reg_Protected[64];
+    uint32_t x86reg_MappedTo[64];
+    uint32_t x86reg_MapOrder[64];
+    uint32_t x86reg_Protected[64];
 
-	uint32_t		CycleCount;
-	uint32_t		RandomModifier;
+    uint32_t CycleCount;
+    uint32_t RandomModifier;
 
-	//FPU
-	uint32_t		Stack_TopPos;
-	uint32_t		x86fpu_MappedTo[16];
-	uint32_t		x86fpu_State[16];
-	uint32_t		x86fpu_RoundingModel[16];
+    //FPU
+    uint32_t Stack_TopPos;
+    uint32_t x86fpu_MappedTo[16];
+    uint32_t x86fpu_State[16];
+    uint32_t x86fpu_RoundingModel[16];
 
-	uint32_t        Fpu_Used;
-	uint32_t       RoundingModel;
+    uint32_t Fpu_Used;
+    uint32_t RoundingModel;
 } REG_INFO;
 
 typedef struct {
-	uint32_t		TargetPC;
-	//uint8_t *		BranchLabel;
-	uint8_t *		LinkLocation;
-	uint8_t *		LinkLocation2;
-	uint32_t		FallThrough;
-	uint32_t		PermLoop;
-	uint32_t		DoneDelaySlot;
-	REG_INFO	RegSet;
+    uint32_t TargetPC;
+    //uint8_t *             BranchLabel;
+    uint8_t *LinkLocation;
+    uint8_t *LinkLocation2;
+    uint32_t FallThrough;
+    uint32_t PermLoop;
+    uint32_t DoneDelaySlot;
+    REG_INFO RegSet;
 } JUMP_INFO;
 
 typedef struct {
-	/* Block Connection info */
-	void **		ParentSection;
-	void *		ContinueSection;
-	void *		JumpSection;
-	uint8_t *		CompiledLocation;
+    /* Block Connection info */
+    void **ParentSection;
+    void *ContinueSection;
+    void *JumpSection;
+    uint8_t *CompiledLocation;
 
 
-	uint32_t		SectionID;
-	uint32_t		Test;
-	uint32_t		Test2;
-	uint32_t		InLoop;
+    uint32_t SectionID;
+    uint32_t Test;
+    uint32_t Test2;
+    uint32_t InLoop;
 
-	uint32_t		StartPC;
-	uint32_t		CompilePC;
+    uint32_t StartPC;
+    uint32_t CompilePC;
 
-	/* Register Info */
-	REG_INFO	RegStart;
-	REG_INFO	RegWorking;
+    /* Register Info */
+    REG_INFO RegStart;
+    REG_INFO RegWorking;
 
-	/* Jump Info */
-	JUMP_INFO   Jump;
-	JUMP_INFO   Cont;
+    /* Jump Info */
+    JUMP_INFO Jump;
+    JUMP_INFO Cont;
 } BLOCK_SECTION;
 
 typedef struct {
-	BLOCK_SECTION * Parent;
-	JUMP_INFO     * JumpInfo;
+    BLOCK_SECTION *Parent;
+    JUMP_INFO *JumpInfo;
 } BLOCK_PARENT;
 
 typedef struct {
-	uint32_t    TargetPC;
-	REG_INFO ExitRegSet;
-	int32_t      reason;
-	int32_t      NextInstruction;
-	uint8_t *   JumpLoc; //32bit jump
+    uint32_t TargetPC;
+    REG_INFO ExitRegSet;
+    int32_t reason;
+    int32_t NextInstruction;
+    uint8_t *JumpLoc;		//32bit jump
 } EXIT_INFO;
 
 typedef struct {
-	uint32_t	 	  StartVAddr;
-	uint8_t *		  CompiledLocation;
-	int32_t           NoOfSections;
-	BLOCK_SECTION BlockInfo;
-	EXIT_INFO  ** ExitInfo;
-	int32_t           ExitCount;
+    uint32_t StartVAddr;
+    uint8_t *CompiledLocation;
+    int32_t NoOfSections;
+    BLOCK_SECTION BlockInfo;
+    EXIT_INFO **ExitInfo;
+    int32_t ExitCount;
 } BLOCK_INFO;
 
 typedef struct {
-	void * CodeBlock;
-	QWORD  OriginalMemory;
+    void *CodeBlock;
+    QWORD OriginalMemory;
 } TARGET_INFO;
 
 typedef struct {
-	uint32_t PAddr;
-	uint32_t VAddr;
-	uint32_t OriginalValue;
-	void * CompiledLocation;
+    uint32_t PAddr;
+    uint32_t VAddr;
+    uint32_t OriginalValue;
+    void *CompiledLocation;
 } ORIGINAL_MEMMARKER;
 
 typedef struct {
-	uint32_t NoOfRDRamBlocks[2048];
-	uint32_t NoOfDMEMBlocks;
-	uint32_t NoOfIMEMBlocks;
-	uint32_t NoOfPifRomBlocks;
+    uint32_t NoOfRDRamBlocks[2048];
+    uint32_t NoOfDMEMBlocks;
+    uint32_t NoOfIMEMBlocks;
+    uint32_t NoOfPifRomBlocks;
 } N64_Blocks_t;
 
 extern N64_Blocks_t N64_Blocks;
 
 #pragma pack(pop)
 
-uint8_t *Compiler4300iBlock    ( void );
-uint8_t *CompileDelaySlot      ( void );
-void CompileExit            ( uint32_t TargetPC, REG_INFO * ExitRegSet, int32_t reason, int32_t CompileNow, void (*x86Jmp)(uintptr_t Value));
-void CompileSystemCheck     ( uint32_t TimerModifier, uint32_t TargetPC, REG_INFO RegSet );
-void FixRandomReg           ( void );
-void FreeSection            ( BLOCK_SECTION * Section, BLOCK_SECTION * Parent);
-void StartRecompilerCPU     ( void );
-void GenerateSectionLinkage ( BLOCK_SECTION * Section );
-void InitilizeInitialCompilerVariable ( void);
-int UnMap_TempRegSet (REG_INFO * RegWorking);
+uint8_t *Compiler4300iBlock(void);
+uint8_t *CompileDelaySlot(void);
+void CompileExit(uint32_t TargetPC, REG_INFO * ExitRegSet, int32_t reason,
+		 int32_t CompileNow, void (*x86Jmp) (uintptr_t Value));
+void CompileSystemCheck(uint32_t TimerModifier, uint32_t TargetPC,
+			REG_INFO RegSet);
+void FixRandomReg(void);
+void FreeSection(BLOCK_SECTION * Section, BLOCK_SECTION * Parent);
+void StartRecompilerCPU(void);
+void GenerateSectionLinkage(BLOCK_SECTION * Section);
+void InitilizeInitialCompilerVariable(void);
+int UnMap_TempRegSet(REG_INFO * RegWorking);
 
-extern uint32_t * TLBLoadAddress, TargetIndex;
-extern TARGET_INFO * TargetInfo;
+extern uint32_t *TLBLoadAddress, TargetIndex;
+extern TARGET_INFO *TargetInfo;
 extern uint16_t FPU_RoundingMode;
 
 #define SetJump32(Loc,JumpLoc) *(uint32_t *)(Loc)= (uint32_t)(((uint32_t)(intptr_t)(JumpLoc)) - (((uint32_t)(intptr_t)(Loc)) + 4));

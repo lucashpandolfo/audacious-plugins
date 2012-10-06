@@ -22,7 +22,7 @@
  * The copyright holders request that bug fixes and improvements to the code
  * should be forwarded to them so if they want them.
  *
- */
+ */  
 #define	EXC_CODE(x)	((x)<<2)
 #define	EXC_INT					EXC_CODE(0)	/* interrupt */
 #define	EXC_MOD					EXC_CODE(1)	/* TLB mod */
@@ -42,34 +42,44 @@
 #define	EXC_FPE					EXC_CODE(15)/* Floating Point Exception */
 #define	EXC_WATCH				EXC_CODE(23)/* Watchpoint reference */
 #define	EXC_VCED				EXC_CODE(31)/* Virt. Coherency on data read */
-
+    
 #define Exception_Name(Except)\
-	(Except) == EXC_INT     ? "interrupt" :\
-	(Except) == EXC_MOD     ? "TLB mod" :\
-	(Except) == EXC_RMISS   ? "Read TLB Miss" :\
-	(Except) == EXC_WMISS   ? "Write TLB Miss" :\
-	(Except) == EXC_RADE    ? "Read Address Error" :\
-	(Except) == EXC_WADE    ? "Write Address Error" :\
-	(Except) == EXC_IBE     ? "Instruction Bus Error" :\
-	(Except) == EXC_DBE     ? "Data Bus Error" :\
-	(Except) == EXC_SYSCALL ? "SYSCALL" :\
-	(Except) == EXC_BREAK   ? "Break" :\
-	(Except) == EXC_II      ? "Illegal Instruction" :\
-	(Except) == EXC_CPU     ? "CoProcessor Unusable" :\
-	(Except) == EXC_OV      ? "OVerflow" :\
-	(Except) == EXC_TRAP    ? "Trap exception" :\
-	(Except) == EXC_VCEI    ? "Virt. Coherency on Inst. fetch" :\
-	(Except) == EXC_FPE     ? "Floating Point Exception" :\
-	(Except) == EXC_WATCH   ? "Watchpoint reference" :\
-	(Except) == EXC_VCED    ? "Virt. Coherency on data read" :\
-	"Unkown"
+(Except) == EXC_INT ? "interrupt" : \
+    (Except) == EXC_MOD ? "TLB mod" : \
+    (Except) == EXC_RMISS ? "Read TLB Miss" : \
+    (Except) == EXC_WMISS ? "Write TLB Miss" : \
+    (Except) == EXC_RADE ? "Read Address Error" : \
+    (Except) == EXC_WADE ? "Write Address Error" : \
+    (Except) == EXC_IBE ? "Instruction Bus Error" : \
+    (Except) == EXC_DBE ? "Data Bus Error" : \
+    (Except) == EXC_SYSCALL ? "SYSCALL" : \
+    (Except) == EXC_BREAK ? "Break" : \
+    (Except) == EXC_II ? "Illegal Instruction" : \
+    (Except) == EXC_CPU ? "CoProcessor Unusable" : \
+    (Except) == EXC_OV ? "OVerflow" : \
+    (Except) == EXC_TRAP ? "Trap exception" : \
+    (Except) == EXC_VCEI ? "Virt. Coherency on Inst. fetch" : \
+    (Except) == EXC_FPE ? "Floating Point Exception" : \
+    (Except) == EXC_WATCH ? "Watchpoint reference" : \
+    (Except) == EXC_VCED ? "Virt. Coherency on data read" : \
+"Unkown" 
+ 
+void
+AiCheckInterrupts(void);
 
-void AiCheckInterrupts      ( void );
-void CheckInterrupts        ( void );
-void DoAddressError         ( uint32_t DelaySlot, uint32_t BadVaddr, uint32_t FromRead );
-void DoBreakException       ( uint32_t DelaySlot );
-void DoCopUnusableException ( uint32_t DelaySlot, uint32_t Coprocessor );
-void DoIntrException        ( uint32_t DelaySlot );
-void DoTLBMiss              ( uint32_t DelaySlot, uint32_t BadVaddr );
-void DoSysCallException ( uint32_t DelaySlot);
+void CheckInterrupts(void);
+
+void DoAddressError(uint32_t DelaySlot, uint32_t BadVaddr,
+		     uint32_t FromRead);
+
+void DoBreakException(uint32_t DelaySlot);
+
+void DoCopUnusableException(uint32_t DelaySlot, uint32_t Coprocessor);
+
+void DoIntrException(uint32_t DelaySlot);
+
+void DoTLBMiss(uint32_t DelaySlot, uint32_t BadVaddr);
+
+void DoSysCallException(uint32_t DelaySlot);
+
 

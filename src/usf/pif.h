@@ -22,10 +22,10 @@
  * The copyright holders request that bug fixes and improvements to the code
  * should be forwarded to them so if they want them.
  *
- */
+ */  
 extern uint8_t *PIF_Ram;
+int32_t GetCicChipID(int8_t * RomData);
+int32_t LoadPifRom(int32_t country);
+void PifRamWrite(void);
+void PifRamRead(void);
 
-int32_t  GetCicChipID ( int8_t * RomData );
-int32_t  LoadPifRom   ( int32_t country );
-void PifRamWrite  ( void );
-void PifRamRead   ( void );

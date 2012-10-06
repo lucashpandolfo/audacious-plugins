@@ -22,10 +22,10 @@
  * The copyright holders request that bug fixes and improvements to the code
  * should be forwarded to them so if they want them.
  *
- */
-
+ */  
+    
 #include "types.h"
-
+    
 #define SP_STATUS_HALT			0x001		/* Bit  0: halt */
 #define SP_STATUS_BROKE			0x002		/* Bit  1: broke */
 #define SP_STATUS_DMA_BUSY		0x004		/* Bit  2: dma busy */
@@ -41,7 +41,7 @@
 #define SP_STATUS_SIG5	       0x1000		/* Bit 12: signal 5 set */
 #define SP_STATUS_SIG6	       0x2000		/* Bit 13: signal 6 set */
 #define SP_STATUS_SIG7	       0x4000		/* Bit 14: signal 7 set */
-
+    
 #define SP_CLR_HALT				0x00001	    /* Bit  0: clear halt */
 #define SP_SET_HALT				0x00002	    /* Bit  1: set halt */
 #define SP_CLR_BROKE			0x00004	    /* Bit  2: clear broke */
@@ -67,7 +67,7 @@
 #define SP_SET_SIG6				0x400000	/* Bit 22: set signal 6 */
 #define SP_CLR_SIG7				0x800000	/* Bit 23: clear signal 7 */
 #define SP_SET_SIG7				0x1000000   /* Bit 24: set signal 7 */
-
+    
 #define DPC_CLR_XBUS_DMEM_DMA	0x0001		/* Bit 0: clear xbus_dmem_dma */
 #define DPC_SET_XBUS_DMEM_DMA	0x0002		/* Bit 1: set xbus_dmem_dma */
 #define DPC_CLR_FREEZE			0x0004		/* Bit 2: clear freeze */
@@ -78,7 +78,7 @@
 #define DPC_CLR_PIPE_CTR		0x0080		/* Bit 7: clear pipe ctr */
 #define DPC_CLR_CMD_CTR			0x0100		/* Bit 8: clear cmd ctr */
 #define DPC_CLR_CLOCK_CTR		0x0200		/* Bit 9: clear clock ctr */
-
+    
 #define DPC_STATUS_XBUS_DMEM_DMA	0x001	/* Bit  0: xbus_dmem_dma */
 #define DPC_STATUS_FREEZE			0x002	/* Bit  1: freeze */
 #define DPC_STATUS_FLUSH			0x004	/* Bit  2: flush */
@@ -90,15 +90,14 @@
 #define DPC_STATUS_DMA_BUSY			0x100	/* Bit  8: dma busy */
 #define DPC_STATUS_END_VALID		0x200	/* Bit  9: end valid */
 #define DPC_STATUS_START_VALID		0x400	/* Bit 10: start valid */
-
+    
 #define R4300i_SP_Intr			0x1
-
-extern char * x86_Strings[8];
-extern char * GPR_Strings[32];
-
+extern char *x86_Strings[8];
+extern char *GPR_Strings[32];
+
 #define x86_Name(Reg) (x86_Strings[(Reg)])
 #define GPR_Name(Reg) (GPR_Strings[(Reg)])
-
+    
 /*
 #define GPR_Name(Reg)\
 	(Reg) == 0  ? "R0" : (Reg) == 1  ? "AT" : (Reg) == 2  ? "V0" : (Reg) == 3  ? "V1" :\
@@ -110,40 +109,37 @@ extern char * GPR_Strings[32];
 	(Reg) == 24 ? "T8" : (Reg) == 25 ? "T9" : (Reg) == 26 ? "K0" : (Reg) == 27 ? "K1" :\
 	(Reg) == 28 ? "GP" : (Reg) == 29 ? "SP" : (Reg) == 30 ? "S8" :\
 	(Reg) == 31 ? "RA" : "Unknown Register"
-*/
-
+*/ 
+    
 #define COP0_Name(Reg)\
-	(Reg) == 0  ? "SP memory address" :\
-	(Reg) == 1  ? "SP DRAM DMA address" :\
-	(Reg) == 2  ? "SP read DMA length" :\
-	(Reg) == 3  ? "SP write DMA length" :\
-	(Reg) == 4  ? "SP status" :\
-	(Reg) == 5  ? "SP DMA full" :\
-	(Reg) == 6  ? "SP DMA busy" :\
-	(Reg) == 7  ? "SP semaphore" :\
-	(Reg) == 8  ? "DP CMD DMA start" :\
-	(Reg) == 9  ? "DP CMD DMA end" :\
-	(Reg) == 10 ? "DP CMD DMA current" :\
-	(Reg) == 11 ? "DP CMD status" :\
-	(Reg) == 12 ? "DP clock counter" :\
-	(Reg) == 13 ? "DP buffer busy counter" :\
-	(Reg) == 14 ? "DP pipe busy counter" :\
-	(Reg) == 15 ? "DP TMEM load counter" :\
-	"Unknown Register"
-
+    (Reg) == 0 ? "SP memory address" : \
+    (Reg) == 1 ? "SP DRAM DMA address" : \
+    (Reg) == 2 ? "SP read DMA length" : \
+    (Reg) == 3 ? "SP write DMA length" : \
+    (Reg) == 4 ? "SP status" : \
+    (Reg) == 5 ? "SP DMA full" : \
+    (Reg) == 6 ? "SP DMA busy" : \
+    (Reg) == 7 ? "SP semaphore" : \
+    (Reg) == 8 ? "DP CMD DMA start" : \
+    (Reg) == 9 ? "DP CMD DMA end" : \
+    (Reg) == 10 ? "DP CMD DMA current" : \
+    (Reg) == 11 ? "DP CMD status" : \
+    (Reg) == 12 ? "DP clock counter" : \
+    (Reg) == 13 ? "DP buffer busy counter" : \
+    (Reg) == 14 ? "DP pipe busy counter" : \
+    (Reg) == 15 ? "DP TMEM load counter" : \"Unknown Register"  
 #define ElementSpecifier(Elem)\
-	(Elem) == 0  ? "" : (Elem) == 1  ? "" : (Elem) == 2  ? " [0q]" :\
-	(Elem) == 3  ? " [1q]" : (Elem) == 4  ? " [0h]" : (Elem) == 5  ? " [1h]" :\
-    (Elem) == 6  ? " [2h]" : (Elem) == 7  ? " [3h]" : (Elem) == 8  ? " [0]" :\
-	(Elem) == 9  ? " [1]" : (Elem) == 10 ? " [2]" : (Elem) == 11 ? " [3]" :\
-	(Elem) == 12 ? " [4]" : (Elem) == 13 ? " [5]" : (Elem) == 14 ? " [6]" :\
-	(Elem) == 15 ? " [7]" : "Unknown Element"
-
-void InitilizeRSPRegisters (void);
-
-/*** RSP Registers ***/
-extern MIPSUWORD   RSP_GPR[32], RSP_Flags[4];
-extern MIPSUDWORD  RSP_ACCUM[8];
-extern VECTOR  RSP_Vect[32];
-
-
+(Elem) == 0 ? "" : (Elem) == 1 ? "" : (Elem) == 2 ? " [0q]" : \
+    (Elem) == 3 ? " [1q]" : (Elem) == 4 ? " [0h]" : (Elem) ==
+    5 ? " [1h]" : \(Elem) == 6 ? " [2h]" : (Elem) ==
+    7 ? " [3h]" : (Elem) == 8 ? " [0]" : \(Elem) ==
+    9 ? " [1]" : (Elem) == 10 ? " [2]" : (Elem) ==
+    11 ? " [3]" : \(Elem) == 12 ? " [4]" : (Elem) ==
+    13 ? " [5]" : (Elem) == 14 ? " [6]" : \(Elem) ==
+    15 ? " [7]" : "Unknown Element"  void InitilizeRSPRegisters(void);
+
+/*** RSP Registers ***/ 
+extern MIPSUWORD RSP_GPR[32], RSP_Flags[4];
+extern MIPSUDWORD RSP_ACCUM[8];
+extern VECTOR RSP_Vect[32];
+
