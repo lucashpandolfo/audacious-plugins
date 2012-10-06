@@ -748,7 +748,7 @@ int32_t init_rsp(void)
 
 	dwBuffer = MainBuffer;
 
-	pLastSecondary == NULL;
+	pLastSecondary = NULL;
 	pLastPrimary = NULL;
 	RSPBlockID = 1;
 

@@ -185,7 +185,7 @@ void Release_Memory ( void ) {
 
 	MemoryState = 0;
 
-	if (MemChunk != 0) {munmap(MemChunk, 0x100000 * sizeof(uintptr_t)) + 0x1D000 + RdramSize; MemChunk=0;}
+	if (MemChunk != 0) {munmap(MemChunk, 0x100000 * sizeof(uintptr_t)); MemChunk=0;}
 	if (N64MEM != 0) {munmap(N64MEM, RdramSize); N64MEM=0;}
 	if (NOMEM != 0) {munmap(NOMEM, 0xD000); NOMEM=0;}
 
