@@ -44,5 +44,4 @@ LIBS += ${GTK_LIBS} ${GLIB_LIBS}  -lz -lm
 
 
 # USF produces tons of warnings; disable the less important ones.
-CFLAGS += -Wno-parentheses \
- -Wno-unused-result 
+CFLAGS +=  -Wno-unused-result 

@@ -73,7 +73,7 @@ enum x86FpuValues {
 
 #define	LOAD_VARIABLE(reg,variable) \
 	PUTDST8(RSPRecompPos, 0x48 | (((reg)&0x20)>>5)); \
-	PUTDST8(RSPRecompPos,0xB8 | ((reg)-1)&0xf); \
+	PUTDST8(RSPRecompPos, 0xB8 | (((reg)-1)&0xf)); \
 	PUTDST64(RSPRecompPos,variable);
 
 // 	// 43 0F B6 0C 0D 40 83 C7 04 movzx       ecx,byte ptr [r9+4C78340h]
