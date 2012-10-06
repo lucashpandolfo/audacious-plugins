@@ -11,7 +11,7 @@ extern u8 BufferSpace[0x10000];
 
 static void SPNOOP()
 {
-    char buff[0x100];
+    
 }
 
 extern u16 AudioInBuffer;	// 0x0000(T8)

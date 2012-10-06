@@ -78,7 +78,7 @@ void usf_fread(void *ptr, int64_t size, int64_t nmemb, VFSFile * file)
     ret = vfs_fread(ptr, size, nmemb, file);
     if (ret != nmemb)
 	printf
-	    ("Warning, tried reading %ld element(s) but vfs_read returned %ld\n",
+	    ("USF: Warning, tried reading %ld element(s) but vfs_read returned %ld\n",
 	     nmemb, ret);
 }
 
@@ -87,7 +87,7 @@ void usf_fseek(VFSFile * file, int64_t offset, int whence)
     int ret;
     ret = vfs_fseek(file, offset, whence);
     if (ret != 0)
-	printf("Warning, vfs_seek returned %d instead of zero\n", ret);
+	printf("USF: Warning, vfs_seek returned %d instead of zero\n", ret);
 }
 
 
@@ -110,14 +110,14 @@ int LoadUSF(const gchar * fn, VFSFile * fil)
     seek_time = 0;
 
     if (!fil) {
-	printf("Could not open USF!\n");
+	printf("USF: Could not open USF!\n");
 	return 0;
     }
 
     usf_fread(buffer, 4, 1, fil);
     if (buffer[0] != 'P' && buffer[1] != 'S' && buffer[2] != 'F'
 	&& buffer[3] != 0x21) {
-	printf("Invalid header in file!\n");
+	printf("USF: Invalid header in file!\n");
 	return 0;
     }
 
@@ -138,7 +138,7 @@ int LoadUSF(const gchar * fn, VFSFile * fil)
 
 	if (buffer[0] != '[' && buffer[1] != 'T' && buffer[2] != 'A'
 	    && buffer[3] != 'G' && buffer[4] != ']') {
-	    printf("Erroneous data in tag area! %" PRIu32 "\n", tagsize);
+	    printf("USF: Erroneous data in tag area! %" PRIu32 "\n", tagsize);
 	    return 0;
 	}
 
@@ -413,7 +413,7 @@ Tuple *usf_get_song_tuple(const gchar * fn, VFSFile * fil)
     uint8_t buffer[16], *buffer2 = NULL, *tagbuffer = NULL;
 
     if (!fil) {
-	printf("Could not open USF!\n");
+	printf("USF: Could not open USF!\n");
 	return NULL;
     }
 
@@ -421,7 +421,7 @@ Tuple *usf_get_song_tuple(const gchar * fn, VFSFile * fil)
 
     if (buffer[0] != 'P' && buffer[1] != 'S' && buffer[2] != 'F'
 	&& buffer[3] != 0x21) {
-	printf("Invalid header in file!\n");
+	printf("USF: Invalid header in file!\n");
 	return NULL;
     }
 
@@ -445,7 +445,7 @@ Tuple *usf_get_song_tuple(const gchar * fn, VFSFile * fil)
 
 	if (buffer[0] != '[' && buffer[1] != 'T' && buffer[2] != 'A'
 	    && buffer[3] != 'G' && buffer[4] != ']') {
-	    printf("Erroneous data in tag area! %" PRIu32 "\n", tagsize);
+	    printf("USF: Erroneous data in tag area! %" PRIu32 "\n", tagsize);
 	    return NULL;
 	}
 
